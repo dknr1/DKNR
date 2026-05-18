@@ -47,7 +47,7 @@ export default async function handler(req, res) {
         properties: {
           Name:     { title:     [{ text: { content: name || 'No Name Provided' } }] },
           Company:  { rich_text: [{ text: { content: company || '' } }] },
-          Service:  { rich_text: [{ text: { content: service || '' } }] },
+          Service: { select: { name: service || 'Other' } },
           Message:  { rich_text: [{ text: { content: message || '' } }] },
           Budget:   { rich_text: [{ text: { content: budget || '' } }] },
           Timeline: { rich_text: [{ text: { content: timeline || '' } }] },
