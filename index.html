@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,24 +11,34 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Tajawal:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Tajawal:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --gold:   #7A0F14;
-      --gold-d: #7A0F14;
-      --cream:  #e8dcc8;
-      --bg:     #070707;
-      --border: rgba(122,15,20,.18);
-      --pad:    clamp(24px, 4vw, 56px);
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    html { scroll-behavior: auto; }
+    :root {
+      --gold: #7A0F14;
+      --gold-d: #7A0F14;
+      --cream: #e8dcc8;
+      --bg: #070707;
+      --border: rgba(122, 15, 20, .18);
+      --pad: clamp(24px, 4vw, 56px);
+    }
+
+    html {
+      scroll-behavior: auto;
+    }
 
     body {
       background: var(--bg);
@@ -36,58 +47,137 @@
       overflow: hidden;
       height: 100vh;
     }
-    /* gallery-open = one long scrollable page (gallery + contact) */
-    body.gallery-open { overflow-y: auto; overflow-x: hidden; height: auto; }
-    body.gallery      #scene { display: none; }
-    body.gallery-open #scene { display: none; }
-    #gallery-page { display: none; background: #1A1A1A; }
-    body.gallery      #gallery-page { display: block; overflow: hidden; height: 100vh; }
-    body.gallery-open #gallery-page { display: block; }
 
-    a { color: inherit; text-decoration: none; }
+    /* gallery-open = one long scrollable page (gallery + contact) */
+    body.gallery-open {
+      overflow-y: auto;
+      overflow-x: hidden;
+      height: auto;
+    }
+
+    body.gallery #scene {
+      display: none;
+    }
+
+    body.gallery-open #scene {
+      display: none;
+    }
+
+    #gallery-page {
+      display: none;
+      background: #1A1A1A;
+    }
+
+    body.gallery #gallery-page {
+      display: block;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    body.gallery-open #gallery-page {
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
     /* ── Grain ───────────────────────────────────────────────── */
     #grain {
-      position: fixed; inset: 0; pointer-events: none; z-index: 800; opacity: .018;
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 800;
+      opacity: .018;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       background-size: 200px 200px;
       animation: grain .4s steps(1) infinite;
     }
+
     @keyframes grain {
-      0%   { background-position:   0px   0px; }
-      25%  { background-position: -40px  30px; }
-      50%  { background-position:  50px -20px; }
-      75%  { background-position: -30px -50px; }
-      100% { background-position:  20px  40px; }
+      0% {
+        background-position: 0px 0px;
+      }
+
+      25% {
+        background-position: -40px 30px;
+      }
+
+      50% {
+        background-position: 50px -20px;
+      }
+
+      75% {
+        background-position: -30px -50px;
+      }
+
+      100% {
+        background-position: 20px 40px;
+      }
     }
 
     /* ── Fill overlay (page transitions) ─────────────────────── */
     #fill {
-      position: fixed; inset: 0; z-index: 300;
-      background: #ebe4d8; opacity: 0; pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: #ebe4d8;
+      opacity: 0;
+      pointer-events: none;
     }
 
     /* ── SECTION 1: Hero ─────────────────────────────────────── */
     #scene {
-      position: relative; width: 100%; height: 100vh;
-      overflow: hidden; background: #2f9dd3;
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background: #2f9dd3;
       animation: scene-in 1s ease forwards;
     }
-    @keyframes scene-in { from { opacity: 0; } to { opacity: 1; } }
 
-    .layer {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      display: block; will-change: transform;
-      user-select: none; -webkit-user-drag: none; pointer-events: none;
+    @keyframes scene-in {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
 
-    #l-main { display: none; }
+    .layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      will-change: transform;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+
+    #l-main {
+      display: none;
+    }
 
     /* Programmatic background canvas */
-    #bg-canvas        { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+    #bg-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
 
     /* Interactive blueprint canvas */
-    #blueprint-canvas { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+    #blueprint-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
 
 
     /* ── Node image cards (old sheets) ───────────────────────── */
@@ -97,13 +187,15 @@
       pointer-events: none;
       opacity: 1;
       transform: scale(1) translateY(0);
-      transition: opacity .30s ease, transform .36s cubic-bezier(.16,1,.3,1);
+      transition: opacity .30s ease, transform .36s cubic-bezier(.16, 1, .3, 1);
       width: clamp(160px, 18vw, 260px);
-      filter: drop-shadow(0 12px 40px rgba(0,0,0,.30))
-              drop-shadow(0  2px  6px rgba(0,0,0,.18));
+      filter: drop-shadow(0 12px 40px rgba(0, 0, 0, .30)) drop-shadow(0 2px 6px rgba(0, 0, 0, .18));
     }
+
     .node-card img {
-      width: 100%; height: auto; display: block;
+      width: 100%;
+      height: auto;
+      display: block;
       border-radius: 2px;
     }
 
@@ -132,6 +224,7 @@
       gap: 0;
       line-height: 1.15;
     }
+
     #hero-text-tl span {
       display: block;
       font-family: 'Bebas Neue', sans-serif;
@@ -149,6 +242,7 @@
       pointer-events: none;
       user-select: none;
     }
+
     #dknr-word img {
       position: absolute;
       inset: 0;
@@ -212,121 +306,244 @@
     /* ── Brand logo — bottom left ─────────────────────────────── */
     #brand-logo {
       position: absolute;
-      left: clamp(32px, 5vw, 80px); bottom: clamp(28px, 4vh, 56px);
+      left: clamp(32px, 5vw, 80px);
+      bottom: clamp(28px, 4vh, 56px);
       z-index: 20;
       width: clamp(72px, 9vw, 140px);
-      object-fit: contain; pointer-events: none; user-select: none;
-      mix-blend-mode: multiply; opacity: .60;
+      object-fit: contain;
+      pointer-events: none;
+      user-select: none;
+      mix-blend-mode: multiply;
+      opacity: .60;
     }
 
     /* ── DKNR wordmark — centred over antler shape ───────────── */
     .hero-dknr {
       pointer-events: none;
       position: absolute;
-      left: 50%; top: 7%;
+      left: 50%;
+      top: 7%;
       transform: translate(-50%, 0);
       z-index: 20;
-      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
     }
+
     .hero-dknr-word {
-      display: none;  /* letter skeletons are now drawn on the blueprint canvas */
+      display: none;
+      /* letter skeletons are now drawn on the blueprint canvas */
       font-family: 'Playfair Display', serif;
-      font-size: clamp(52px, 7.5vw, 108px); font-weight: 900;
-      line-height: 1; letter-spacing: .12em; text-transform: uppercase;
+      font-size: clamp(52px, 7.5vw, 108px);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: .12em;
+      text-transform: uppercase;
       color: transparent;
-      -webkit-text-stroke: 1px rgba(16,12,8,.40);
-      text-stroke: 1px rgba(16,12,8,.40);
-      pointer-events: auto; user-select: none;
+      -webkit-text-stroke: 1px rgba(16, 12, 8, .40);
+      text-stroke: 1px rgba(16, 12, 8, .40);
+      pointer-events: auto;
+      user-select: none;
       mix-blend-mode: multiply;
     }
 
     /* ── DKNR contact card ────────────────────────────────────── */
     #dknr-card {
-      position: relative; width: clamp(260px, 28vw, 340px);
-      border-radius: 5px; border: 1px solid rgba(16,12,8,.10);
-      background: rgba(248,244,238,.97);
-      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-      overflow: hidden; opacity: 0;
-      transform: translateY(12px) scale(.97); pointer-events: none;
+      position: relative;
+      width: clamp(260px, 28vw, 340px);
+      border-radius: 5px;
+      border: 1px solid rgba(16, 12, 8, .10);
+      background: rgba(248, 244, 238, .97);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(12px) scale(.97);
+      pointer-events: none;
       transform-origin: bottom right;
-      transition: opacity .28s cubic-bezier(.4,0,.2,1), transform .34s cubic-bezier(.34,1.2,.64,1);
+      transition: opacity .28s cubic-bezier(.4, 0, .2, 1), transform .34s cubic-bezier(.34, 1.2, .64, 1);
     }
-    #dknr-card.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+
+    #dknr-card.open {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
     .dknr-card-top {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 13px 18px 12px; border-bottom: 1px solid rgba(16,12,8,.07);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 18px 12px;
+      border-bottom: 1px solid rgba(16, 12, 8, .07);
     }
+
     .dknr-card-eyebrow {
-      font-family: 'Cormorant Garamond', serif; font-size: 10px;
-      font-weight: 700; letter-spacing: .28em; text-transform: uppercase;
-      color: rgba(16,12,8,.38);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: rgba(16, 12, 8, .38);
     }
+
     .dknr-card-close {
-      background: none; border: none; padding: 2px 0; line-height: 1;
-      font-family: 'Space Mono', monospace; font-size: 13px;
-      color: rgba(16,12,8,.25); cursor: pointer; transition: color .18s;
+      background: none;
+      border: none;
+      padding: 2px 0;
+      line-height: 1;
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      color: rgba(16, 12, 8, .25);
+      cursor: pointer;
+      transition: color .18s;
     }
-    .dknr-card-close:hover { color: rgba(16,12,8,.75); }
+
+    .dknr-card-close:hover {
+      color: rgba(16, 12, 8, .75);
+    }
+
     .dknr-card-row {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 12px; text-decoration: none; padding: 13px 18px;
-      border-bottom: 1px solid rgba(16,12,8,.055); transition: background .18s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      text-decoration: none;
+      padding: 13px 18px;
+      border-bottom: 1px solid rgba(16, 12, 8, .055);
+      transition: background .18s;
     }
-    .dknr-card-row:last-child { border-bottom: none; }
-    .dknr-card-row:hover { background: rgba(16,12,8,.04); }
+
+    .dknr-card-row:last-child {
+      border-bottom: none;
+    }
+
+    .dknr-card-row:hover {
+      background: rgba(16, 12, 8, .04);
+    }
+
     .dknr-row-label {
-      font-family: 'Cormorant Garamond', serif; font-size: 11px;
-      font-weight: 600; letter-spacing: .20em; text-transform: uppercase;
-      color: rgba(16,12,8,.36); flex-shrink: 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .20em;
+      text-transform: uppercase;
+      color: rgba(16, 12, 8, .36);
+      flex-shrink: 0;
     }
+
     .dknr-row-val {
-      font-family: 'Space Mono', monospace; font-size: 9px;
-      letter-spacing: .1em; text-transform: uppercase; color: rgba(16,12,8,.65);
-      text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-      transition: color .18s; display: flex; align-items: center; gap: 7px;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(16, 12, 8, .65);
+      text-align: right;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      transition: color .18s;
+      display: flex;
+      align-items: center;
+      gap: 7px;
     }
-    .dknr-card-row:hover .dknr-row-val { color: rgba(16,12,8,.92); }
+
+    .dknr-card-row:hover .dknr-row-val {
+      color: rgba(16, 12, 8, .92);
+    }
+
     .dknr-row-arrow {
-      font-size: 11px; line-height: 1; color: rgba(16,12,8,.20);
-      transition: transform .18s, color .18s; flex-shrink: 0;
+      font-size: 11px;
+      line-height: 1;
+      color: rgba(16, 12, 8, .20);
+      transition: transform .18s, color .18s;
+      flex-shrink: 0;
     }
-    .dknr-card-row:hover .dknr-row-arrow { transform: translate(2px,-2px); color: rgba(16,12,8,.65); }
+
+    .dknr-card-row:hover .dknr-row-arrow {
+      transform: translate(2px, -2px);
+      color: rgba(16, 12, 8, .65);
+    }
 
     /* ── Scroll hint ──────────────────────────────────────────── */
     .scroll-hint {
-      position: absolute; bottom: clamp(20px,3vh,36px); left: 50%;
-      transform: translateX(-50%); z-index: 15; pointer-events: none;
-      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      position: absolute;
+      bottom: clamp(20px, 3vh, 36px);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 15;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
     }
+
     .scroll-hint span {
-      font-family: 'Cormorant Garamond', serif; font-size: 11px;
-      font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: rgba(16,12,8,.42);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: rgba(16, 12, 8, .42);
     }
+
     .scroll-hint-line {
-      width: 1px; height: 32px;
-      background: linear-gradient(to bottom, rgba(16,12,8,.22), transparent);
+      width: 1px;
+      height: 32px;
+      background: linear-gradient(to bottom, rgba(16, 12, 8, .22), transparent);
       animation: hint-pulse 2s ease-in-out infinite;
     }
+
     @keyframes hint-pulse {
-      0%, 100% { opacity: .35; transform: scaleY(1); }
-      50%       { opacity: .90; transform: scaleY(1.15); }
+
+      0%,
+      100% {
+        opacity: .35;
+        transform: scaleY(1);
+      }
+
+      50% {
+        opacity: .90;
+        transform: scaleY(1.15);
+      }
     }
 
     /* ── Contact & footer — cream palette to match gallery ───── */
-    #contact { background: #1A1A1A; min-height: 100vh; }
-    .ct-top {
-      padding: clamp(40px,5vw,64px) var(--pad) clamp(40px,5vw,64px);
-      border-bottom: 1px solid rgba(245,243,233,.10);
-      display: flex; align-items: flex-start; justify-content: space-between; gap: 32px;
+    #contact {
+      background: #1A1A1A;
+      min-height: 100vh;
     }
+
+    .ct-top {
+      padding: clamp(40px, 5vw, 64px) var(--pad) clamp(40px, 5vw, 64px);
+      border-bottom: 1px solid rgba(245, 243, 233, .10);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
     .ct-heading {
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(52px, 10vw, 148px);
-      line-height: .88; letter-spacing: .04em;
-      color: #F5F3E9; text-transform: uppercase;
-      padding-top: clamp(8px,2vw,24px);
+      line-height: .88;
+      letter-spacing: .04em;
+      color: #F5F3E9;
+      text-transform: uppercase;
+      padding-top: clamp(8px, 2vw, 24px);
     }
-    .ct-links { display: flex; flex-direction: column; align-items: flex-end; gap: 16px; flex-shrink: 0; max-width: 42%; }
+
+    .ct-links {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 16px;
+      flex-shrink: 0;
+      max-width: 42%;
+    }
+
     .ct-video-label {
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(24px, 3.2vw, 48px);
@@ -334,128 +551,274 @@
       color: #F5F3E9;
       text-align: right;
     }
+
     .ct-born-line {
-      display: inline-flex; align-items: center; gap: clamp(10px, 1.5vw, 22px);
+      display: inline-flex;
+      align-items: center;
+      gap: clamp(10px, 1.5vw, 22px);
     }
+
     .ct-arrow {
       width: clamp(100px, 14vw, 200px);
       flex-shrink: 0;
       margin-bottom: clamp(6px, 1vw, 14px);
     }
+
     .ct-video-frame {
       width: 100%;
       border-radius: 16px;
       overflow: hidden;
-      border: 1px solid rgba(16,12,8,.12);
-      box-shadow: 0 8px 40px rgba(16,12,8,.14);
+      border: 1px solid rgba(16, 12, 8, .12);
+      box-shadow: 0 8px 40px rgba(16, 12, 8, .14);
       cursor: pointer;
       position: relative;
       flex-shrink: 0;
     }
+
     .ct-video-frame video {
-      width: 100%; height: 100%;
-      display: block; object-fit: cover;
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
     }
+
     .ct-video-poster {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       transition: opacity .3s;
       pointer-events: none;
     }
-    .ct-video-frame.playing .ct-video-poster { opacity: 0; }
+
+    .ct-video-frame.playing .ct-video-poster {
+      opacity: 0;
+    }
+
     .ct-video-play {
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      background: rgba(16,12,8,.18);
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(16, 12, 8, .18);
       transition: opacity .25s;
       pointer-events: none;
     }
-    .ct-video-play svg { width: 36px; height: 36px; opacity: .85; }
-    .ct-video-frame.playing .ct-video-play { opacity: 0; }
+
+    .ct-video-play svg {
+      width: 36px;
+      height: 36px;
+      opacity: .85;
+    }
+
+    .ct-video-frame.playing .ct-video-play {
+      opacity: 0;
+    }
+
     .ct-link {
-      font-family: 'Space Mono', monospace; font-size: clamp(13px, 1.4vw, 18px);
-      letter-spacing: .18em; text-transform: uppercase;
-      color: #F5F3E9; display: flex; align-items: center; gap: 8px; transition: color .25s;
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(13px, 1.4vw, 18px);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #F5F3E9;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color .25s;
     }
-    .ct-link:hover { color: rgba(245,243,233,.55); }
-    .ct-link svg { width: 13px; height: 13px; }
+
+    .ct-link:hover {
+      color: rgba(245, 243, 233, .55);
+    }
+
+    .ct-link svg {
+      width: 13px;
+      height: 13px;
+    }
+
     .ct-form {
-      padding: clamp(48px,6vw,80px) var(--pad) clamp(64px,8vw,100px);
-      display: flex; flex-direction: column; gap: 12px;
-      max-width: 860px; margin: 0 auto;
+      padding: clamp(48px, 6vw, 80px) var(--pad) clamp(64px, 8vw, 100px);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 860px;
+      margin: 0 auto;
     }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
     .form-field input,
     .form-field textarea,
     .form-field select {
-      width: 100%; background: rgba(245,243,233,.06);
-      border: 1px solid rgba(245,243,233,.15); border-radius: 48px;
+      width: 100%;
+      background: rgba(245, 243, 233, .06);
+      border: 1px solid rgba(245, 243, 233, .15);
+      border-radius: 48px;
       padding: 20px 28px;
-      font-family: 'Space Mono', monospace; font-size: clamp(13px, 1.2vw, 16px);
-      letter-spacing: .12em; text-transform: uppercase;
-      color: rgba(245,243,233,.70); outline: none;
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(13px, 1.2vw, 16px);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(245, 243, 233, .70);
+      outline: none;
       transition: border-color .25s, color .25s;
-      appearance: none; -webkit-appearance: none;
+      appearance: none;
+      -webkit-appearance: none;
     }
-    .form-field textarea { border-radius: 24px; resize: none; height: 120px; padding-top: 22px; }
+
+    .form-field textarea {
+      border-radius: 24px;
+      resize: none;
+      height: 120px;
+      padding-top: 22px;
+    }
+
     .form-field input:focus,
     .form-field textarea:focus,
-    .form-field select:focus { border-color: rgba(245,243,233,.40); color: #F5F3E9; }
+    .form-field select:focus {
+      border-color: rgba(245, 243, 233, .40);
+      color: #F5F3E9;
+    }
+
     .form-field input::placeholder,
-    .form-field textarea::placeholder { color: rgba(245,243,233,.35); }
-    .sel-wrap { position: relative; }
+    .form-field textarea::placeholder {
+      color: rgba(245, 243, 233, .35);
+    }
+
+    .sel-wrap {
+      position: relative;
+    }
+
     .sel-wrap::after {
-      content: ''; position: absolute; right: 26px; top: 50%; transform: translateY(-50%);
-      border-left: 5px solid transparent; border-right: 5px solid transparent;
-      border-top: 5px solid rgba(245,243,233,.35); pointer-events: none;
+      content: '';
+      position: absolute;
+      right: 26px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid rgba(245, 243, 233, .35);
+      pointer-events: none;
     }
-    .sel-wrap select option { background: #ebe4d8; color: rgba(16,12,8,.80); }
+
+    .sel-wrap select option {
+      background: #ebe4d8;
+      color: rgba(16, 12, 8, .80);
+    }
+
     .form-submit {
-      margin-top: 8px; width: 100%; padding: 22px 32px; border-radius: 48px; border: none;
+      margin-top: 8px;
+      width: 100%;
+      padding: 22px 32px;
+      border-radius: 48px;
+      border: none;
       background: #F5F3E9;
-      font-family: 'Space Mono', monospace; font-size: clamp(14px, 1.3vw, 17px); font-weight: 700;
-      letter-spacing: .22em; text-transform: uppercase; color: #1A1A1A;
-      cursor: pointer; transition: background .25s, letter-spacing .3s;
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(14px, 1.3vw, 17px);
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: #1A1A1A;
+      cursor: pointer;
+      transition: background .25s, letter-spacing .3s;
     }
-    .form-submit:hover { background: rgba(245,243,233,.80); letter-spacing: .3em; }
-    .form-submit.sent { background: #2f9dd3; color: #F5F3E9; }
+
+    .form-submit:hover {
+      background: rgba(245, 243, 233, .80);
+      letter-spacing: .3em;
+    }
+
+    .form-submit.sent {
+      background: #2f9dd3;
+      color: #F5F3E9;
+    }
+
     .form-status {
-      font-family: 'Space Mono', monospace; font-size: 13px;
-      letter-spacing: .18em; text-transform: uppercase;
-      text-align: center; color: var(--gold-d); min-height: 20px; margin-top: 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      text-align: center;
+      color: var(--gold-d);
+      min-height: 20px;
+      margin-top: 8px;
     }
 
     /* ── Footer ──────────────────────────────────────────────── */
     footer {
-      border-top: 1px solid rgba(16,12,8,.10);
+      border-top: 1px solid rgba(16, 12, 8, .10);
       background: #1A1A1A;
-      padding: clamp(24px,3vw,40px) var(--pad);
-      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      padding: clamp(24px, 3vw, 40px) var(--pad);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
     }
-    .ft-logo { font-family: 'Space Mono', monospace; font-size: clamp(14px, 1.3vw, 18px); font-weight: 700; letter-spacing: .2em; color: #F5F3E9; text-transform: uppercase; }
-    .ft-links { display: flex; gap: 28px; align-items: center; }
+
+    .ft-logo {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(14px, 1.3vw, 18px);
+      font-weight: 700;
+      letter-spacing: .2em;
+      color: #F5F3E9;
+      text-transform: uppercase;
+    }
+
+    .ft-links {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+    }
+
     .ft-links a {
-      font-family: 'Space Mono', monospace; font-size: clamp(12px, 1.1vw, 15px);
-      letter-spacing: .2em; text-transform: uppercase;
-      color: #F5F3E9; transition: color .25s;
-      display: flex; align-items: center; gap: 5px;
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(12px, 1.1vw, 15px);
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #F5F3E9;
+      transition: color .25s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
-    .ft-links a:hover { color: rgba(245,243,233,.55); }
-    .ft-sep { color: rgba(245,243,233,.35); font-size: 15px; }
+
+    .ft-links a:hover {
+      color: rgba(245, 243, 233, .55);
+    }
+
+    .ft-sep {
+      color: rgba(245, 243, 233, .35);
+      font-size: 15px;
+    }
+
     #bottom-frame {
-      border-top: 1px solid rgba(245,243,233,.08);
+      border-top: 1px solid rgba(245, 243, 233, .08);
       background: #1A1A1A;
-      padding: clamp(14px,2vw,22px) var(--pad);
-      display: flex; align-items: center; justify-content: center;
+      padding: clamp(14px, 2vw, 22px) var(--pad);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
+
     .bt-phone {
-      font-family: 'Bebas Neue', sans-serif; font-size: clamp(28px, 4vw, 56px);
-      letter-spacing: .12em; text-transform: uppercase;
-      color: #F5F3E9; transition: color .25s;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(28px, 4vw, 56px);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #F5F3E9;
+      transition: color .25s;
       text-decoration: none;
     }
-    .bt-phone:hover { color: rgba(245,243,233,.55); }
+
+    .bt-phone:hover {
+      color: rgba(245, 243, 233, .55);
+    }
 
     /* ── Mobile hero (hidden on desktop) ────────────────────── */
     #mobile-hero {
@@ -466,16 +829,22 @@
     @media (max-width: 768px) {
 
       /* — Override scene background to dark — */
-      #scene { background: #1A1A1A; animation: none; }
+      #scene {
+        background: #1A1A1A;
+        animation: none;
+      }
 
       /* — DKNR letters: blue and phone-sized on mobile — */
       #dknr-word {
         inset: auto;
-        left: 0; right: 0;
-        top: 50%; transform: translateY(-50%);
+        left: 0;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
         height: 28vh;
         filter: brightness(0) invert(1) sepia(1) saturate(4) hue-rotate(156deg);
       }
+
       #dknr-word img {
         object-position: center center;
       }
@@ -486,7 +855,9 @@
       .node-card,
       #hero-text-tl,
       #hero-tagline,
-      #scene .ticker-wrap { display: none !important; }
+      #scene .ticker-wrap {
+        display: none !important;
+      }
 
       /* — Show mobile hero — */
       #mobile-hero {
@@ -502,79 +873,211 @@
         gap: 16px;
         pointer-events: none;
       }
+
       .mh-logo {
         width: clamp(64px, 18vw, 100px);
         height: auto;
         opacity: 0.90;
       }
+
       .mh-sub {
         font-family: 'Space Mono', monospace;
         font-size: clamp(10px, 2.8vw, 14px);
         letter-spacing: .30em;
         text-transform: uppercase;
-        color: rgba(245,243,233,0.45);
+        color: rgba(245, 243, 233, 0.45);
         margin: 0;
       }
+
       /* — Hero — */
-      #hero-text-tl  { font-size: clamp(18px, 5.5vw, 32px); top: clamp(16px, 3vh, 36px); left: 20px; }
-      #hero-tagline  { font-size: clamp(12px, 3.5vw, 18px); bottom: clamp(16px, 3vh, 36px); left: 20px; }
-      #brand-logo    { left: 20px; bottom: 20px; width: clamp(44px, 12vw, 68px); }
-      .scroll-hint   { bottom: 14px; }
-      .node-card     { width: clamp(110px, 28vw, 180px); }
+      #hero-text-tl {
+        font-size: clamp(18px, 5.5vw, 32px);
+        top: clamp(16px, 3vh, 36px);
+        left: 20px;
+      }
+
+      #hero-tagline {
+        font-size: clamp(12px, 3.5vw, 18px);
+        bottom: clamp(16px, 3vh, 36px);
+        left: 20px;
+      }
+
+      #brand-logo {
+        left: 20px;
+        bottom: 20px;
+        width: clamp(44px, 12vw, 68px);
+      }
+
+      .scroll-hint {
+        bottom: 14px;
+      }
+
+      .node-card {
+        width: clamp(110px, 28vw, 180px);
+      }
 
       /* — Gallery ticker — */
-      .ticker-item   { font-size: 10px; padding: 0 14px; letter-spacing: .22em; }
+      .ticker-item {
+        font-size: 10px;
+        padding: 0 14px;
+        letter-spacing: .22em;
+      }
 
       /* — Gallery cards — */
-      .sg-loc        { font-size: 11px; letter-spacing: .22em; }
-      .sg-title      { font-size: clamp(48px, 13vw, 82px); }
-      .sg-sub        { font-size: clamp(13px, 4vw, 20px); bottom: clamp(36px, 5vh, 56px); padding: 0 20px; }
-      .sg-card       { width: clamp(110px, 28vw, 180px); height: clamp(148px, 38vw, 244px); }
-      #k5-travel     { width: clamp(110px, 28vw, 180px); height: clamp(148px, 38vw, 244px); }
+      .sg-loc {
+        font-size: 11px;
+        letter-spacing: .22em;
+      }
+
+      .sg-title {
+        font-size: clamp(48px, 13vw, 82px);
+      }
+
+      .sg-sub {
+        font-size: clamp(13px, 4vw, 20px);
+        bottom: clamp(36px, 5vh, 56px);
+        padding: 0 20px;
+      }
+
+      .sg-card {
+        width: clamp(110px, 28vw, 180px);
+        height: clamp(148px, 38vw, 244px);
+      }
+
+      #k5-travel {
+        width: clamp(110px, 28vw, 180px);
+        height: clamp(148px, 38vw, 244px);
+      }
 
       /* — Sig section tickers — */
       #sig-ticker-track,
-      #sig-ticker-2-track { font-size: clamp(26px, 7.5vw, 52px); }
+      #sig-ticker-2-track {
+        font-size: clamp(26px, 7.5vw, 52px);
+      }
 
       /* — Contact — */
-      .ct-top        { flex-direction: column; align-items: flex-start; padding: 64px 20px 28px; gap: 20px; }
-      .ct-heading    { font-size: clamp(40px, 13vw, 68px); }
-      .ct-links      { align-items: flex-start; max-width: 100%; }
-      .ct-video-label{ font-size: clamp(18px, 5.5vw, 32px); text-align: left; }
-      .ct-link       { font-size: clamp(12px, 3.2vw, 16px); }
-      .ct-form       { padding: 28px 20px 52px; gap: 10px; }
-      .form-row      { grid-template-columns: 1fr; gap: 10px; }
+      .ct-top {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 64px 20px 28px;
+        gap: 20px;
+      }
+
+      .ct-heading {
+        font-size: clamp(40px, 13vw, 68px);
+      }
+
+      .ct-links {
+        align-items: flex-start;
+        max-width: 100%;
+      }
+
+      .ct-video-label {
+        font-size: clamp(18px, 5.5vw, 32px);
+        text-align: left;
+      }
+
+      .ct-link {
+        font-size: clamp(12px, 3.2vw, 16px);
+      }
+
+      .ct-form {
+        padding: 28px 20px 52px;
+        gap: 10px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
       .form-field input,
       .form-field textarea,
-      .form-field select { padding: 16px 20px; font-size: 12px; border-radius: 38px; }
-      .form-field textarea { height: 100px; }
-      .form-submit   { padding: 18px 20px; font-size: clamp(12px, 3vw, 14px); }
+      .form-field select {
+        padding: 16px 20px;
+        font-size: 12px;
+        border-radius: 38px;
+      }
+
+      .form-field textarea {
+        height: 100px;
+      }
+
+      .form-submit {
+        padding: 18px 20px;
+        font-size: clamp(12px, 3vw, 14px);
+      }
 
       /* — Footer — */
-      footer         { flex-direction: column; align-items: flex-start; gap: 18px; padding: 28px 20px; }
-      .ft-logo       { font-size: clamp(13px, 4vw, 16px); }
-      .ft-links      { flex-direction: column; gap: 12px; }
-      .ft-links a    { font-size: clamp(12px, 3.5vw, 14px); }
-      .ft-sep        { display: none; }
-      #bottom-frame  { padding: 14px 20px; }
-      .bt-phone      { font-size: clamp(22px, 7vw, 40px); }
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+        padding: 28px 20px;
+      }
+
+      .ft-logo {
+        font-size: clamp(13px, 4vw, 16px);
+      }
+
+      .ft-links {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .ft-links a {
+        font-size: clamp(12px, 3.5vw, 14px);
+      }
+
+      .ft-sep {
+        display: none;
+      }
+
+      #bottom-frame {
+        padding: 14px 20px;
+      }
+
+      .bt-phone {
+        font-size: clamp(22px, 7vw, 40px);
+      }
     }
 
     @media (max-width: 480px) {
-      #hero-text-tl  { font-size: clamp(16px, 5vw, 24px); }
-      #hero-tagline  { font-size: clamp(11px, 3vw, 15px); }
-      .ct-heading    { font-size: clamp(36px, 12vw, 56px); }
-      .sg-title      { font-size: clamp(40px, 12vw, 64px); }
-      .sg-sub        { font-size: clamp(12px, 3.5vw, 17px); }
-      .bt-phone      { font-size: clamp(20px, 8vw, 36px); }
+      #hero-text-tl {
+        font-size: clamp(16px, 5vw, 24px);
+      }
+
+      #hero-tagline {
+        font-size: clamp(11px, 3vw, 15px);
+      }
+
+      .ct-heading {
+        font-size: clamp(36px, 12vw, 56px);
+      }
+
+      .sg-title {
+        font-size: clamp(40px, 12vw, 64px);
+      }
+
+      .sg-sub {
+        font-size: clamp(12px, 3.5vw, 17px);
+      }
+
+      .bt-phone {
+        font-size: clamp(20px, 8vw, 36px);
+      }
+
       #sig-ticker-track,
-      #sig-ticker-2-track { font-size: clamp(22px, 7vw, 40px); }
+      #sig-ticker-2-track {
+        font-size: clamp(22px, 7vw, 40px);
+      }
     }
 
     /* ── Scrolling ticker ────────────────────────────────────── */
     .ticker-wrap {
       position: absolute;
-      left: 0; right: 0;
+      left: 0;
+      right: 0;
       top: 0;
       height: 26px;
       overflow: hidden;
@@ -582,9 +1085,10 @@
       pointer-events: none;
       display: flex;
       align-items: center;
-      border-top: 1px solid rgba(16,12,8,.10);
-      border-bottom: 1px solid rgba(16,12,8,.10);
+      border-top: 1px solid rgba(16, 12, 8, .10);
+      border-bottom: 1px solid rgba(16, 12, 8, .10);
     }
+
     .ticker-track {
       display: flex;
       align-items: center;
@@ -592,6 +1096,7 @@
       will-change: transform;
       animation: ticker-scroll 30s linear infinite;
     }
+
     .ticker-item {
       font-family: 'Space Mono', monospace;
       font-size: 8px;
@@ -600,22 +1105,32 @@
       color: #F5F3E9;
       padding: 0 24px;
     }
+
     .ticker-sep {
-      color: rgba(245,243,233,.40);
+      color: rgba(245, 243, 233, .40);
       font-size: 9px;
       flex-shrink: 0;
     }
+
     @keyframes ticker-scroll {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
     }
 
-    #gallery-page { position: relative; }
+    #gallery-page {
+      position: relative;
+    }
 
     /* ── SECTION 2: Gallery — Spencer Gabor fan-cards ───────── */
     #gallery {
       position: relative;
-      width: 100%; height: 100vh;
+      width: 100%;
+      height: 100vh;
       overflow: hidden;
       background: #1A1A1A;
     }
@@ -623,47 +1138,63 @@
     /* Location tag — top center */
     .sg-loc {
       position: absolute;
-      top: clamp(36px, 5vh, 52px); left: 50%;
+      top: clamp(36px, 5vh, 52px);
+      left: 50%;
       transform: translateX(-50%);
-      z-index: 20; pointer-events: none;
+      z-index: 20;
+      pointer-events: none;
       font-family: 'Space Mono', monospace;
-      font-size: 9px; letter-spacing: .32em; text-transform: uppercase;
-      color: #F5F3E9; white-space: nowrap;
+      font-size: 9px;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: #F5F3E9;
+      white-space: nowrap;
     }
 
     /* Giant title — sits behind the cards */
     .sg-title {
       position: absolute;
-      top: 50%; left: 50%;
+      top: 50%;
+      left: 50%;
       transform: translate(-50%, -50%);
       z-index: 4;
       font-family: 'Playfair Display', serif;
       font-size: clamp(68px, 12vw, 176px);
-      font-weight: 900; letter-spacing: .10em;
+      font-weight: 900;
+      letter-spacing: .10em;
       text-transform: uppercase;
       color: #F5F3E9;
-      line-height: 1; text-align: center;
+      line-height: 1;
+      text-align: center;
       white-space: nowrap;
-      pointer-events: none; user-select: none;
+      pointer-events: none;
+      user-select: none;
     }
 
     /* Ghost subtitle — behind everything */
     .sg-sub {
       position: absolute;
       bottom: clamp(52px, 8vh, 84px);
-      left: 0; right: 0; text-align: center;
-      z-index: 2; pointer-events: none; user-select: none;
+      left: 0;
+      right: 0;
+      text-align: center;
+      z-index: 2;
+      pointer-events: none;
+      user-select: none;
       font-family: 'Tajawal', sans-serif;
       font-size: clamp(18px, 2.8vw, 42px);
       font-weight: 400;
-      color: #F5F3E9; line-height: 1.4;
+      color: #F5F3E9;
+      line-height: 1.4;
     }
 
     /* Cards container — anchored at viewport center */
     .sg-cards {
       position: absolute;
-      top: 50%; left: 50%;
-      width: 0; height: 0;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
       z-index: 6;
     }
 
@@ -678,44 +1209,63 @@
       cursor: pointer;
       /* transform is set entirely by GSAP — no CSS vars */
       box-shadow:
-        0 4px  8px  rgba(0,0,0,.18),
-        0 16px 40px rgba(0,0,0,.32),
-        0 40px 80px rgba(0,0,0,.40),
-        0 80px 140px rgba(0,0,0,.36);
+        0 4px 8px rgba(0, 0, 0, .18),
+        0 16px 40px rgba(0, 0, 0, .32),
+        0 40px 80px rgba(0, 0, 0, .40),
+        0 80px 140px rgba(0, 0, 0, .36);
       transition: box-shadow .5s ease;
     }
+
     .sg-card:hover {
       box-shadow:
-        0 6px  12px rgba(0,0,0,.22),
-        0 20px 50px rgba(0,0,0,.40),
-        0 56px 100px rgba(0,0,0,.50),
-        0 100px 160px rgba(0,0,0,.44);
+        0 6px 12px rgba(0, 0, 0, .22),
+        0 20px 50px rgba(0, 0, 0, .40),
+        0 56px 100px rgba(0, 0, 0, .50),
+        0 100px 160px rgba(0, 0, 0, .44);
     }
+
     .sg-card img {
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
-      pointer-events: none; user-select: none;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+      user-select: none;
       -webkit-user-drag: none;
     }
 
     /* Scroll hint inside gallery */
     .gallery-scroll-hint {
       position: absolute;
-      bottom: clamp(12px, 2vh, 22px); left: 50%;
+      bottom: clamp(12px, 2vh, 22px);
+      left: 50%;
       transform: translateX(-50%);
-      z-index: 20; pointer-events: none;
-      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      z-index: 20;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
     }
+
     .gallery-scroll-hint span {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 11px; font-weight: 600;
-      letter-spacing: .24em; text-transform: uppercase;
-      color: rgba(16,12,8,.35);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: rgba(16, 12, 8, .35);
     }
 
     @media (max-width: 768px) {
-      .sg-card { width: clamp(130px, 38vw, 200px); height: clamp(175px, 51vw, 270px); }
-      .sg-title { font-size: clamp(52px, 14vw, 90px); }
+      .sg-card {
+        width: clamp(130px, 38vw, 200px);
+        height: clamp(175px, 51vw, 270px);
+      }
+
+      .sg-title {
+        font-size: clamp(52px, 14vw, 90px);
+      }
     }
 
     /* ── K5 travelling card (fixed clone during gallery→contact scroll) */
@@ -728,31 +1278,38 @@
       height: clamp(215px, 25.5vw, 365px);
       will-change: transform;
       box-shadow:
-        0 4px  8px  rgba(0,0,0,.18),
-        0 16px 40px rgba(0,0,0,.32),
-        0 40px 80px rgba(0,0,0,.40),
-        0 80px 140px rgba(0,0,0,.36);
+        0 4px 8px rgba(0, 0, 0, .18),
+        0 16px 40px rgba(0, 0, 0, .32),
+        0 40px 80px rgba(0, 0, 0, .40),
+        0 80px 140px rgba(0, 0, 0, .36);
     }
-    #k5-travel > img {
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
+
+    #k5-travel>img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
       border-radius: 16px;
       box-shadow:
-        0 2px  4px  rgba(0,0,0,.06),
-        0 8px  20px rgba(0,0,0,.10),
-        0 24px 50px rgba(0,0,0,.18),
-        0 50px 90px rgba(0,0,0,.16);
+        0 2px 4px rgba(0, 0, 0, .06),
+        0 8px 20px rgba(0, 0, 0, .10),
+        0 24px 50px rgba(0, 0, 0, .18),
+        0 50px 90px rgba(0, 0, 0, .16);
     }
+
     #sig-on-card {
       position: absolute;
-      top: 50%; left: 50%;
+      top: 50%;
+      left: 50%;
       transform: translate(-50%, -50%);
       width: 200%;
       pointer-events: none;
       clip-path: inset(0 100% 0 0);
     }
+
     #sig-on-card img {
-      width: 100%; height: auto;
+      width: 100%;
+      height: auto;
       display: block;
       mix-blend-mode: screen;
       opacity: 0.92;
@@ -762,39 +1319,70 @@
     /* ── Sig-ticker ─────────────────────────────────────────── */
     #sig-ticker,
     #sig-ticker-2 {
-      position: absolute; left: 0; right: 0;
-      z-index: 2; pointer-events: none; opacity: 0;
+      position: absolute;
+      left: 0;
+      right: 0;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0;
       overflow: hidden;
       background: #070707;
-      border-top:    1px solid rgba(255,255,255,0.11);
-      border-bottom: 1px solid rgba(255,255,255,0.11);
+      border-top: 1px solid rgba(255, 255, 255, 0.11);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.11);
       padding: 16px 0;
       -webkit-mask-image: linear-gradient(to right,
-        transparent 0%, black 12%, black 88%, transparent 100%);
+          transparent 0%, black 12%, black 88%, transparent 100%);
       mask-image: linear-gradient(to right,
-        transparent 0%, black 12%, black 88%, transparent 100%);
+          transparent 0%, black 12%, black 88%, transparent 100%);
     }
-    #sig-ticker   { top: 32%; transform: translateY(-50%); }
-    #sig-ticker-2 { top: 68%; transform: translateY(-50%); }
+
+    #sig-ticker {
+      top: 32%;
+      transform: translateY(-50%);
+    }
+
+    #sig-ticker-2 {
+      top: 68%;
+      transform: translateY(-50%);
+    }
 
     #sig-ticker-track,
     #sig-ticker-2-track {
-      display: inline-block; white-space: nowrap;
+      display: inline-block;
+      white-space: nowrap;
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(38px, 5.2vw, 82px);
-      letter-spacing: .07em; text-transform: uppercase;
+      letter-spacing: .07em;
+      text-transform: uppercase;
       color: #F5F3E9;
     }
-    #sig-ticker-track   { animation: sig-tick-r 18s linear infinite; }
-    #sig-ticker-2-track { animation: sig-tick-l 18s linear infinite; }
+
+    #sig-ticker-track {
+      animation: sig-tick-r 18s linear infinite;
+    }
+
+    #sig-ticker-2-track {
+      animation: sig-tick-l 18s linear infinite;
+    }
 
     @keyframes sig-tick-r {
-      from { transform: translateX(-50%); }
-      to   { transform: translateX(0%);   }
+      from {
+        transform: translateX(-50%);
+      }
+
+      to {
+        transform: translateX(0%);
+      }
     }
+
     @keyframes sig-tick-l {
-      from { transform: translateX(0%);   }
-      to   { transform: translateX(-50%); }
+      from {
+        transform: translateX(0%);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
     }
 
     /* ── Signature / information section ────────────────────── */
@@ -804,9 +1392,9 @@
       min-height: 65vh;
       overflow: hidden;
     }
-
   </style>
 </head>
+
 <body>
 
   <div id="intro"></div>
@@ -833,32 +1421,43 @@
 
     <!-- Large DKNR wordmark -->
     <div id="dknr-word">
-      <img id="dknr-d" src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/h1.png" alt="D" draggable="false" loading="eager" />
-      <img id="dknr-k" src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/h2.png" alt="K" draggable="false" loading="eager" />
-      <img id="dknr-n" src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/h3.png" alt="N" draggable="false" loading="eager" />
-      <img id="dknr-r" src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/h4.png" alt="R" draggable="false" loading="eager" />
+      <img id="dknr-d" src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/h1.png" alt="D" draggable="false"
+        loading="eager" />
+      <img id="dknr-k" src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/h2.png" alt="K" draggable="false"
+        loading="eager" />
+      <img id="dknr-n" src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/h3.png" alt="N" draggable="false"
+        loading="eager" />
+      <img id="dknr-r" src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/h4.png" alt="R" draggable="false"
+        loading="eager" />
     </div>
 
     <!-- Cursive signature overlay -->
-    <img id="hero-sig" src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/TW.png" alt="" draggable="false" loading="eager" />
+    <img id="hero-sig" src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/TW.png" alt="" draggable="false"
+      loading="eager" />
 
     <!-- Drawing canvas over DKNR -->
     <canvas id="dknr-canvas"></canvas>
 
     <!-- Top-right antler logo -->
-    <img id="hero-logo" src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/57h.png" alt="DKNR" draggable="false" loading="eager" fetchpriority="high" />
+    <img id="hero-logo" src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/57h.png" alt="DKNR" draggable="false"
+      loading="eager" fetchpriority="high" />
 
     <!-- Mobile-only hero layout -->
     <div id="mobile-hero">
-      <img src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/57h.png" alt="DKNR" class="mh-logo" draggable="false" loading="eager" />
+      <img src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/57h.png" alt="DKNR" class="mh-logo"
+        draggable="false" loading="eager" />
       <p class="mh-sub">Born from Darkness</p>
     </div>
 
     <!-- Node image cards — old sheets, appear at prominent node points -->
-    <div class="node-card" id="nc-0"><img src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/img2.png" alt="" draggable="false" loading="lazy" /></div>
-    <div class="node-card" id="nc-1"><img src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/img3.png" alt="" draggable="false" loading="lazy" /></div>
-    <div class="node-card" id="nc-2"><img src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/img4.png" alt="" draggable="false" loading="lazy" /></div>
-    <div class="node-card" id="nc-3"><img src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/img5.png" alt="" draggable="false" loading="lazy" /></div>
+    <div class="node-card" id="nc-0"><img src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/img2.png" alt=""
+        draggable="false" loading="lazy" /></div>
+    <div class="node-card" id="nc-1"><img src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/img3.png" alt=""
+        draggable="false" loading="lazy" /></div>
+    <div class="node-card" id="nc-2"><img src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/img4.png" alt=""
+        draggable="false" loading="lazy" /></div>
+    <div class="node-card" id="nc-3"><img src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/img5.png" alt=""
+        draggable="false" loading="lazy" /></div>
 
 
     <div class="scroll-hint">
@@ -895,163 +1494,193 @@
   <div id="gallery-page">
 
 
-  <!-- ── SECTION 2: Gallery ──────────────────────────────────── -->
-  <section id="gallery">
+    <!-- ── SECTION 2: Gallery ──────────────────────────────────── -->
+    <section id="gallery">
 
-    <span class="sg-loc">HICHEM</span>
+      <span class="sg-loc">HICHEM</span>
 
-    <h1 class="sg-title">DKNR</h1>
+      <h1 class="sg-title">DKNR</h1>
 
-    <!-- Stacked / fanned portrait cards — GSAP positions everything -->
-    <div class="sg-cards" id="sg-cards">
-      <div class="sg-card" data-idx="0" data-depth="0.020"><img src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/K4.png" alt="" draggable="false" loading="lazy" /></div>
-      <div class="sg-card" data-idx="1" data-depth="0.055"><img src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/K3.png" alt="" draggable="false" loading="lazy" /></div>
-      <div class="sg-card" data-idx="2" data-depth="0.095"><img src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/K2.png" alt="" draggable="false" loading="lazy" /></div>
-      <div class="sg-card" data-idx="3" data-depth="0.145"><img src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/K1.png" alt="" draggable="false" loading="lazy" /></div>
-      <div class="sg-card" data-idx="4" data-depth="0.210" id="k5-gallery-card"><img src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/K5.png" alt="" draggable="false" loading="lazy" /></div>
-    </div>
-
-    <p class="sg-sub">The genetic heir in the age of cosmic winter</p>
-
-    <!-- ticker on gallery too -->
-    <div class="ticker-wrap">
-      <div class="ticker-track">
-        <span class="ticker-item">DKNR</span><span class="ticker-sep">·</span>
-        <span class="ticker-item">BORN FROM DARKNESS</span><span class="ticker-sep">·</span>
-        <span class="ticker-item">2399</span><span class="ticker-sep">·</span>
-        <span class="ticker-item">DKNR</span><span class="ticker-sep">·</span>
-        <span class="ticker-item">BORN FROM DARKNESS</span><span class="ticker-sep">·</span>
-        <span class="ticker-item">2399</span><span class="ticker-sep">·</span>
-        <span class="ticker-item">DKNR</span><span class="ticker-sep">·</span>
-        <span class="ticker-item">BORN FROM DARKNESS</span><span class="ticker-sep">·</span>
-        <span class="ticker-item">2399</span><span class="ticker-sep">·</span>
-        <span class="ticker-item">DKNR</span><span class="ticker-sep">·</span>
-        <span class="ticker-item">BORN FROM DARKNESS</span><span class="ticker-sep">·</span>
-        <span class="ticker-item">2399</span><span class="ticker-sep">·</span>
-        <span class="ticker-item">DKNR</span><span class="ticker-sep">·</span>
-        <span class="ticker-item">BORN FROM DARKNESS</span><span class="ticker-sep">·</span>
-        <span class="ticker-item">2399</span><span class="ticker-sep">·</span>
-        <span class="ticker-item">DKNR</span><span class="ticker-sep">·</span>
-        <span class="ticker-item">BORN FROM DARKNESS</span><span class="ticker-sep">·</span>
-        <span class="ticker-item">2399</span><span class="ticker-sep">·</span>
+      <!-- Stacked / fanned portrait cards — GSAP positions everything -->
+      <div class="sg-cards" id="sg-cards">
+        <div class="sg-card" data-idx="0" data-depth="0.020"><img
+            src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/K4.png" alt="" draggable="false" loading="lazy" />
+        </div>
+        <div class="sg-card" data-idx="1" data-depth="0.055"><img
+            src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/K3.png" alt="" draggable="false" loading="lazy" />
+        </div>
+        <div class="sg-card" data-idx="2" data-depth="0.095"><img
+            src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/K2.png" alt="" draggable="false" loading="lazy" />
+        </div>
+        <div class="sg-card" data-idx="3" data-depth="0.145"><img
+            src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/K1.png" alt="" draggable="false" loading="lazy" />
+        </div>
+        <div class="sg-card" data-idx="4" data-depth="0.210" id="k5-gallery-card"><img
+            src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/K5.png" alt="" draggable="false" loading="lazy" />
+        </div>
       </div>
-    </div>
 
-    <div class="gallery-scroll-hint">
-      <span>Scroll</span>
-      <div class="scroll-hint-line"></div>
-    </div>
-  </section>
+      <p class="sg-sub">The genetic heir in the age of cosmic winter</p>
 
-  <!-- ── SECTION 3: Contact ──────────────────────────────────── -->
-  <section id="contact">
-    <div class="ct-top">
-      <h1 class="ct-heading">
-        <span class="ct-born-line">Born
-          <svg class="ct-arrow" viewBox="0 0 180 110" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M 8 88 C 18 84, 32 70, 52 52 C 72 34, 100 18, 132 11 C 148 7, 158 9, 164 13"
-                  stroke="#2f9dd3" stroke-width="1.7" stroke-linecap="round"/>
-            <polygon points="178,13 162,5 165,13 162,21" fill="#2f9dd3"/>
-          </svg>
-        </span><br>from<br>Darkness.
-      </h1>
+      <!-- ticker on gallery too -->
+      <div class="ticker-wrap">
+        <div class="ticker-track">
+          <span class="ticker-item">DKNR</span><span class="ticker-sep">·</span>
+          <span class="ticker-item">BORN FROM DARKNESS</span><span class="ticker-sep">·</span>
+          <span class="ticker-item">2399</span><span class="ticker-sep">·</span>
+          <span class="ticker-item">DKNR</span><span class="ticker-sep">·</span>
+          <span class="ticker-item">BORN FROM DARKNESS</span><span class="ticker-sep">·</span>
+          <span class="ticker-item">2399</span><span class="ticker-sep">·</span>
+          <span class="ticker-item">DKNR</span><span class="ticker-sep">·</span>
+          <span class="ticker-item">BORN FROM DARKNESS</span><span class="ticker-sep">·</span>
+          <span class="ticker-item">2399</span><span class="ticker-sep">·</span>
+          <span class="ticker-item">DKNR</span><span class="ticker-sep">·</span>
+          <span class="ticker-item">BORN FROM DARKNESS</span><span class="ticker-sep">·</span>
+          <span class="ticker-item">2399</span><span class="ticker-sep">·</span>
+          <span class="ticker-item">DKNR</span><span class="ticker-sep">·</span>
+          <span class="ticker-item">BORN FROM DARKNESS</span><span class="ticker-sep">·</span>
+          <span class="ticker-item">2399</span><span class="ticker-sep">·</span>
+          <span class="ticker-item">DKNR</span><span class="ticker-sep">·</span>
+          <span class="ticker-item">BORN FROM DARKNESS</span><span class="ticker-sep">·</span>
+          <span class="ticker-item">2399</span><span class="ticker-sep">·</span>
+        </div>
+      </div>
 
-      <div class="ct-links">
-        <p class="ct-video-label">Journey to Planet Earth 2399</p>
-        <div class="ct-video-frame" id="ctVideoFrame">
-          <video id="ctVideo" src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/34.mp4" playsinline preload="none" loop></video>
-          <img class="ct-video-poster" src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/66.png" alt="" draggable="false" loading="lazy" />
-          <div class="ct-video-play">
-            <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="18" cy="18" r="17" stroke="#ebe4d8" stroke-width="1.2" fill="rgba(235,228,216,.10)"/>
-              <polygon points="14,11 26,18 14,25" fill="#ebe4d8"/>
+      <div class="gallery-scroll-hint">
+        <span>Scroll</span>
+        <div class="scroll-hint-line"></div>
+      </div>
+    </section>
+
+    <!-- ── SECTION 3: Contact ──────────────────────────────────── -->
+    <section id="contact">
+      <div class="ct-top">
+        <h1 class="ct-heading">
+          <span class="ct-born-line">Born
+            <svg class="ct-arrow" viewBox="0 0 180 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 8 88 C 18 84, 32 70, 52 52 C 72 34, 100 18, 132 11 C 148 7, 158 9, 164 13" stroke="#2f9dd3"
+                stroke-width="1.7" stroke-linecap="round" />
+              <polygon points="178,13 162,5 165,13 162,21" fill="#2f9dd3" />
             </svg>
+          </span><br>from<br>Darkness.
+        </h1>
+
+        <div class="ct-links">
+          <p class="ct-video-label">Journey to Planet Earth 2399</p>
+          <div class="ct-video-frame" id="ctVideoFrame">
+            <video id="ctVideo" src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/34.mp4" playsinline
+              preload="none" loop></video>
+            <img class="ct-video-poster" src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/66.png" alt=""
+              draggable="false" loading="lazy" />
+            <div class="ct-video-play">
+              <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="18" cy="18" r="17" stroke="#ebe4d8" stroke-width="1.2" fill="rgba(235,228,216,.10)" />
+                <polygon points="14,11 26,18 14,25" fill="#ebe4d8" />
+              </svg>
+            </div>
+          </div>
+          <a class="ct-link" href="https://www.instagram.com/dknr/" target="_blank" rel="noopener">
+            See our work
+            <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M1 9L9 1M9 1H3M9 1v6" />
+            </svg>
+          </a>
+          <a class="ct-link" href="https://x.com/dknr_official" target="_blank" rel="noopener">
+            2399
+            <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M1 9L9 1M9 1H3M9 1v6" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- ── Black transition section ─────────────────────────── -->
+      <div class="sig-section">
+        <div id="sig-ticker">
+          <span id="sig-ticker-track">We are working on brand development. &nbsp;&nbsp;&nbsp;&nbsp; We are working on
+            brand development. &nbsp;&nbsp;&nbsp;&nbsp; We are working on brand development. &nbsp;&nbsp;&nbsp;&nbsp; We
+            are working on brand development. &nbsp;&nbsp;&nbsp;&nbsp;</span>
+        </div>
+        <div id="sig-ticker-2">
+          <span id="sig-ticker-2-track">Welcome to the world of ice. &nbsp;&nbsp;&nbsp;&nbsp; Welcome to the world of
+            ice. &nbsp;&nbsp;&nbsp;&nbsp; Welcome to the world of ice. &nbsp;&nbsp;&nbsp;&nbsp; Welcome to the world of
+            ice. &nbsp;&nbsp;&nbsp;&nbsp;</span>
+        </div>
+      </div>
+
+      <form class="ct-form" id="contactForm" novalidate>
+        <div class="form-row">
+          <div class="form-field"><input type="text" name="name" placeholder="Full Name" autocomplete="name" required />
+          </div>
+          <div class="form-field"><input type="email" name="email" placeholder="Email" autocomplete="email" required />
           </div>
         </div>
-        <a class="ct-link" href="https://www.instagram.com/dknr/" target="_blank" rel="noopener">
-          See our work
-          <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 9L9 1M9 1H3M9 1v6"/></svg>
+        <div class="form-row">
+          <div class="form-field"><input type="text" name="company" placeholder="Company Name" /></div>
+          <div class="form-field"><input type="url" name="website" placeholder="Company Website" /></div>
+        </div>
+        <div class="form-field sel-wrap">
+          <select name="service" required>
+            <option value="" disabled selected>What are you looking for?</option>
+            <option>Brand Identity</option>
+            <option>Web Experience</option>
+            <option>Creative Direction</option>
+            <option>Full Package</option>
+            <option>Something else</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <textarea name="message" placeholder="Tell us about your project"></textarea>
+        </div>
+        <div class="form-field">
+          <input type="text" name="budget" placeholder="What is your budget?" />
+        </div>
+        <div class="form-field sel-wrap">
+          <select name="timeline">
+            <option value="" disabled selected>When are you looking to start?</option>
+            <option>Immediately</option>
+            <option>Within 1 month</option>
+            <option>1–3 months</option>
+            <option>3–6 months</option>
+            <option>Just exploring</option>
+          </select>
+        </div>
+        <button type="submit" class="form-submit" id="submitBtn">Submit</button>
+        <p class="form-status" id="formStatus"></p>
+      </form>
+    </section>
+
+    <!-- ── Footer ─────────────────────────────────────────────── -->
+    <footer>
+      <span class="ft-logo">DKNR</span>
+      <div class="ft-links">
+        <a href="https://www.instagram.com/dknr/" target="_blank" rel="noopener">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="2" width="20" height="20" rx="5" />
+            <circle cx="12" cy="12" r="4" />
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
+          </svg>
+          Instagram
         </a>
-        <a class="ct-link" href="https://x.com/dknr_official" target="_blank" rel="noopener">
-          2399
-          <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 9L9 1M9 1H3M9 1v6"/></svg>
+        <span class="ft-sep">·</span>
+        <a href="https://x.com/dknr_official" target="_blank" rel="noopener">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25z" />
+          </svg>
+          Twitter
         </a>
+        <span class="ft-sep">·</span>
+        <a href="mailto:BADIDHICHEM7@GMAIL.COM">BADIDHICHEM7@GMAIL.COM</a>
+        <span class="ft-sep">·</span>
+        <a href="https://api.whatsapp.com/send/?phone=213558930532&text&type=phone_number&app_absent=0" target="_blank"
+          rel="noopener">+213 558 930 532</a>
       </div>
+    </footer>
+
+    <div id="bottom-frame">
+      <a class="bt-phone" href="/" rel="noopener">DKNR</a>
     </div>
-
-    <!-- ── Black transition section ─────────────────────────── -->
-    <div class="sig-section">
-      <div id="sig-ticker">
-        <span id="sig-ticker-track">We are working on brand development. &nbsp;&nbsp;&nbsp;&nbsp; We are working on brand development. &nbsp;&nbsp;&nbsp;&nbsp; We are working on brand development. &nbsp;&nbsp;&nbsp;&nbsp; We are working on brand development. &nbsp;&nbsp;&nbsp;&nbsp;</span>
-      </div>
-      <div id="sig-ticker-2">
-        <span id="sig-ticker-2-track">Welcome to the world of ice. &nbsp;&nbsp;&nbsp;&nbsp; Welcome to the world of ice. &nbsp;&nbsp;&nbsp;&nbsp; Welcome to the world of ice. &nbsp;&nbsp;&nbsp;&nbsp; Welcome to the world of ice. &nbsp;&nbsp;&nbsp;&nbsp;</span>
-      </div>
-    </div>
-
-    <form class="ct-form" id="contactForm" novalidate>
-      <div class="form-row">
-        <div class="form-field"><input type="text"  name="name"    placeholder="Full Name"     autocomplete="name"  required /></div>
-        <div class="form-field"><input type="email" name="email"   placeholder="Email"         autocomplete="email" required /></div>
-      </div>
-      <div class="form-row">
-        <div class="form-field"><input type="text"  name="company" placeholder="Company Name" /></div>
-        <div class="form-field"><input type="url"   name="website" placeholder="Company Website" /></div>
-      </div>
-      <div class="form-field sel-wrap">
-        <select name="service" required>
-          <option value="" disabled selected>What are you looking for?</option>
-          <option>Brand Identity</option>
-          <option>Web Experience</option>
-          <option>Creative Direction</option>
-          <option>Full Package</option>
-          <option>Something else</option>
-        </select>
-      </div>
-      <div class="form-field">
-        <textarea name="message" placeholder="Tell us about your project"></textarea>
-      </div>
-      <div class="form-field">
-        <input type="text" name="budget" placeholder="What is your budget?" />
-      </div>
-      <div class="form-field sel-wrap">
-        <select name="timeline">
-          <option value="" disabled selected>When are you looking to start?</option>
-          <option>Immediately</option>
-          <option>Within 1 month</option>
-          <option>1–3 months</option>
-          <option>3–6 months</option>
-          <option>Just exploring</option>
-        </select>
-      </div>
-      <button type="submit" class="form-submit" id="submitBtn">Submit</button>
-      <p class="form-status" id="formStatus"></p>
-    </form>
-  </section>
-
-  <!-- ── Footer ─────────────────────────────────────────────── -->
-  <footer>
-    <span class="ft-logo">DKNR</span>
-    <div class="ft-links">
-      <a href="https://www.instagram.com/dknr/" target="_blank" rel="noopener">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
-        Instagram
-      </a>
-      <span class="ft-sep">·</span>
-      <a href="https://x.com/dknr_official" target="_blank" rel="noopener">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25z"/></svg>
-        Twitter
-      </a>
-      <span class="ft-sep">·</span>
-      <a href="mailto:BADIDHICHEM7@GMAIL.COM">BADIDHICHEM7@GMAIL.COM</a>
-      <span class="ft-sep">·</span>
-      <a href="https://api.whatsapp.com/send/?phone=213558930532&text&type=phone_number&app_absent=0" target="_blank" rel="noopener">+213 558 930 532</a>
-    </div>
-  </footer>
-
-  <div id="bottom-frame">
-    <a class="bt-phone" href="https://api.whatsapp.com/send/?phone=213558930532&text&type=phone_number&app_absent=0" target="_blank" rel="noopener">DKNR</a>
-  </div>
 
   </div><!-- end #gallery-page -->
 
@@ -1064,882 +1693,886 @@
   </div>
 
   <script>
-  window.addEventListener('DOMContentLoaded', () => {
-    if (history.scrollRestoration) history.scrollRestoration = 'manual';
-    gsap.registerPlugin(ScrollTrigger);
+    window.addEventListener('DOMContentLoaded', () => {
+      if (history.scrollRestoration) history.scrollRestoration = 'manual';
+      gsap.registerPlugin(ScrollTrigger);
 
-    const ctVideoFrame = document.getElementById('ctVideoFrame');
-    const ctVideo      = document.getElementById('ctVideo');
-    ctVideoFrame.addEventListener('click', () => {
-      if (ctVideo.paused) { ctVideo.play(); ctVideoFrame.classList.add('playing'); }
-      else                { ctVideo.pause(); ctVideoFrame.classList.remove('playing'); }
-    });
-    ctVideo.addEventListener('pause',  () => ctVideoFrame.classList.remove('playing'));
-    ctVideo.addEventListener('ended',  () => ctVideoFrame.classList.remove('playing'));
-
-    ctVideoFrame.addEventListener('dblclick', () => {
-      if (!document.fullscreenElement) {
-        (ctVideoFrame.requestFullscreen || ctVideoFrame.webkitRequestFullscreen ||
-         ctVideoFrame.mozRequestFullScreen).call(ctVideoFrame);
-      } else {
-        (document.exitFullscreen || document.webkitExitFullscreen ||
-         document.mozCancelFullScreen).call(document);
-      }
-    });
-
-    async function submitToNotion(d) {
-      const res = await fetch('/api/submit', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name:     d.name     || '',
-          email:    d.email    || '',
-          company:  d.company  || '',
-          website:  d.website  || '',
-          service:  d.service  || '',
-          message: d.message || '',
-          budget:   d.budget   || '',
-          timeline: d.timeline || '',
-        })
+      const ctVideoFrame = document.getElementById('ctVideoFrame');
+      const ctVideo = document.getElementById('ctVideo');
+      ctVideoFrame.addEventListener('click', () => {
+        if (ctVideo.paused) { ctVideo.play(); ctVideoFrame.classList.add('playing'); }
+        else { ctVideo.pause(); ctVideoFrame.classList.remove('playing'); }
       });
-      return res.ok;
-    }
+      ctVideo.addEventListener('pause', () => ctVideoFrame.classList.remove('playing'));
+      ctVideo.addEventListener('ended', () => ctVideoFrame.classList.remove('playing'));
 
-    /* ── DOM ─────────────────────────────────────────────────── */
-    let introComplete = false; // blocks page transitions until all intro animations finish
-    const scene      = document.getElementById('scene');
-    const galleryEl  = document.getElementById('gallery');
-    const fill       = document.getElementById('fill');
-    const scrollHint = document.querySelector('.scroll-hint');
+      ctVideoFrame.addEventListener('dblclick', () => {
+        if (!document.fullscreenElement) {
+          (ctVideoFrame.requestFullscreen || ctVideoFrame.webkitRequestFullscreen ||
+            ctVideoFrame.mozRequestFullScreen).call(ctVideoFrame);
+        } else {
+          (document.exitFullscreen || document.webkitExitFullscreen ||
+            document.mozCancelFullScreen).call(document);
+        }
+      });
 
-    /* ── Intro: water-surface sequence ──────────────────────────
-       1. Logo on black, rippling (SVG turbulence distortion)
-       2. Distortion clears + bg shifts black → hero blue  (surfacing)
-       3. Logo clear on blue — brief hold
-       4. Shoots to corner
-       5. Intro fades out (same blue as hero → seamless)
-    ─────────────────────────────────────────────────────────── */
-    (function runIntro() {
-      const logo  = document.getElementById('hero-logo');
-      const intro = document.getElementById('intro');
+      async function submitToNotion(d) {
+        const res = await fetch('/api/submit', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: d.name || '',
+            email: d.email || '',
+            company: d.company || '',
+            website: d.website || '',
+            service: d.service || '',
+            message: d.message || '',
+            budget: d.budget || '',
+            timeline: d.timeline || '',
+          })
+        });
+        return res.ok;
+      }
 
-      window.addEventListener('load', () => {
-        requestAnimationFrame(() => {
+      /* ── DOM ─────────────────────────────────────────────────── */
+      let introComplete = false; // blocks page transitions until all intro animations finish
+      const scene = document.getElementById('scene');
+      const galleryEl = document.getElementById('gallery');
+      const fill = document.getElementById('fill');
+      const scrollHint = document.querySelector('.scroll-hint');
+
+      /* ── Intro: water-surface sequence ──────────────────────────
+         1. Logo on black, rippling (SVG turbulence distortion)
+         2. Distortion clears + bg shifts black → hero blue  (surfacing)
+         3. Logo clear on blue — brief hold
+         4. Shoots to corner
+         5. Intro fades out (same blue as hero → seamless)
+      ─────────────────────────────────────────────────────────── */
+      (function runIntro() {
+        const logo = document.getElementById('hero-logo');
+        const intro = document.getElementById('intro');
+
+        window.addEventListener('load', () => {
           requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
 
-            /* exact centre offset — logo lives at top-right via CSS,
-               we shift it with x/y so it appears dead-centre          */
-            const logoW = logo.offsetWidth;
-            const logoH = logo.offsetHeight;
-            const rect  = logo.getBoundingClientRect();
-            const dx    = window.innerWidth  / 2 - (rect.left + logoW / 2);
-            const dy    = window.innerHeight / 2 - (rect.top  + logoH / 2);
+              /* exact centre offset — logo lives at top-right via CSS,
+                 we shift it with x/y so it appears dead-centre          */
+              const logoW = logo.offsetWidth;
+              const logoH = logo.offsetHeight;
+              const rect = logo.getBoundingClientRect();
+              const dx = window.innerWidth / 2 - (rect.left + logoW / 2);
+              const dy = window.innerHeight / 2 - (rect.top + logoH / 2);
 
-            gsap.timeline()
+              gsap.timeline()
 
-              /* hide hero cards until after signature */
-              .set('#nc-0', { opacity: 0, rotation: -12 })
-              .set('#nc-1', { opacity: 0, rotation:   5 })
-              .set('#nc-2', { opacity: 0, rotation:  -5 })
-              .set('#nc-3', { opacity: 0, rotation:   8 })
+                /* hide hero cards until after signature */
+                .set('#nc-0', { opacity: 0, rotation: -12 })
+                .set('#nc-1', { opacity: 0, rotation: 5 })
+                .set('#nc-2', { opacity: 0, rotation: -5 })
+                .set('#nc-3', { opacity: 0, rotation: 8 })
 
-              /* 1 — logo dead-centre on black, fades in cleanly */
-              .set(logo,  { x: dx, y: dy, opacity: 0 })
-              .to(logo,   { opacity: 1, duration: 0.6, ease: 'power2.out' })
+                /* 1 — logo dead-centre on black, fades in cleanly */
+                .set(logo, { x: dx, y: dy, opacity: 0 })
+                .to(logo, { opacity: 1, duration: 0.6, ease: 'power2.out' })
 
-              /* 2 — hold */
-              .to(logo,   { duration: 0.7 })
+                /* 2 — hold */
+                .to(logo, { duration: 0.7 })
 
-              /* 3 — intro wipes upward like a curtain rising,
-                     logo glides to its corner at the same time    */
-              .to(intro,  { yPercent: -100, duration: 0.85,
-                            ease: 'power2.inOut',
-                            onComplete() {
-                              intro.style.display = 'none';
-                              logo.style.position = 'absolute';
-                            }
-                          })
-              .to(logo,   { x: 0, y: 0, duration: 0.85,
-                            ease: 'power2.inOut' })
+                /* 3 — intro wipes upward like a curtain rising,
+                       logo glides to its corner at the same time    */
+                .to(intro, {
+                  yPercent: -100, duration: 0.85,
+                  ease: 'power2.inOut',
+                  onComplete() {
+                    intro.style.display = 'none';
+                    logo.style.position = 'absolute';
+                  }
+                })
+                .to(logo, {
+                  x: 0, y: 0, duration: 0.85,
+                  ease: 'power2.inOut'
+                })
 
-              /* top-left text: shoots in from off-screen left, springs to position */
-              .set('#hero-text-tl', { x: -(window.innerWidth * 0.35), opacity: 1 })
-              .to('#hero-text-tl',  { x: 0, duration: 0.55, ease: 'back.out(1.4)' })
+                /* top-left text: shoots in from off-screen left, springs to position */
+                .set('#hero-text-tl', { x: -(window.innerWidth * 0.35), opacity: 1 })
+                .to('#hero-text-tl', { x: 0, duration: 0.55, ease: 'back.out(1.4)' })
 
-              /* bottom tagline: same spring slide-in from left */
-              .set('#hero-tagline', { x: -(window.innerWidth * 0.35), opacity: 1 })
-              .to('#hero-tagline',  { x: 0, duration: 0.55, ease: 'back.out(1.4)' })
+                /* bottom tagline: same spring slide-in from left */
+                .set('#hero-tagline', { x: -(window.innerWidth * 0.35), opacity: 1 })
+                .to('#hero-tagline', { x: 0, duration: 0.55, ease: 'back.out(1.4)' })
 
-              /* DKNR: D+N blur in together, then K+R blur in together */
-              .set(['#dknr-d','#dknr-k','#dknr-n','#dknr-r'], { opacity: 0, filter: 'blur(28px)' })
-              .to(['#dknr-d','#dknr-n'], { opacity: 1, filter: 'blur(0px)', duration: 0.75, ease: 'power2.out' })
-              .to(['#dknr-k','#dknr-r'], { opacity: 1, filter: 'blur(0px)', duration: 0.75, ease: 'power2.out' })
+                /* DKNR: D+N blur in together, then K+R blur in together */
+                .set(['#dknr-d', '#dknr-k', '#dknr-n', '#dknr-r'], { opacity: 0, filter: 'blur(28px)' })
+                .to(['#dknr-d', '#dknr-n'], { opacity: 1, filter: 'blur(0px)', duration: 0.75, ease: 'power2.out' })
+                .to(['#dknr-k', '#dknr-r'], { opacity: 1, filter: 'blur(0px)', duration: 0.75, ease: 'power2.out' })
 
-              /* signature sweeps in left-to-right like a pen stroke */
-              .set('#hero-sig',  { opacity: 1, clipPath: 'inset(0 100% 0 0)' })
-              .to('#hero-sig',   { clipPath: 'inset(0 0% 0 0)', duration: 1.5, ease: 'power2.inOut' })
+                /* signature sweeps in left-to-right like a pen stroke */
+                .set('#hero-sig', { opacity: 1, clipPath: 'inset(0 100% 0 0)' })
+                .to('#hero-sig', { clipPath: 'inset(0 0% 0 0)', duration: 1.5, ease: 'power2.inOut' })
 
-              /* hero cards burst in after signature */
-              .to(['#nc-0','#nc-1','#nc-2','#nc-3'], {
-                opacity: 1, duration: 0.4, ease: 'power2.out', stagger: 0.08,
-                onComplete() { introComplete = true; }
-              });
+                /* hero cards burst in after signature */
+                .to(['#nc-0', '#nc-1', '#nc-2', '#nc-3'], {
+                  opacity: 1, duration: 0.4, ease: 'power2.out', stagger: 0.08,
+                  onComplete() { introComplete = true; }
+                });
+            });
           });
         });
-      });
-    })();
+      })();
 
-    /* ── DKNR drawing trail (letter-only, bounded) ───────────── */
-    (function initDknrDraw() {
-      const canvas     = document.getElementById('dknr-canvas');
-      const ctx        = canvas.getContext('2d');
-      const letterImgs = Array.from(document.querySelectorAll('#dknr-word img'));
-      const sceneEl    = document.getElementById('scene');
+      /* ── DKNR drawing trail (letter-only, bounded) ───────────── */
+      (function initDknrDraw() {
+        const canvas = document.getElementById('dknr-canvas');
+        const ctx = canvas.getContext('2d');
+        const letterImgs = Array.from(document.querySelectorAll('#dknr-word img'));
+        const sceneEl = document.getElementById('scene');
 
-      const hit    = document.createElement('canvas');
-      const hitCtx = hit.getContext('2d', { willReadFrequently: true });
+        const hit = document.createElement('canvas');
+        const hitCtx = hit.getContext('2d', { willReadFrequently: true });
 
-      let offX = 0, offY = 0;
+        let offX = 0, offY = 0;
 
-      function resize() {
-        const w = sceneEl.offsetWidth, h = sceneEl.offsetHeight;
-        hit.width = w; hit.height = h;
-        hitCtx.clearRect(0, 0, w, h);
-        letterImgs.forEach(img => {
-          if (img.complete && img.naturalWidth > 0)
-            hitCtx.drawImage(img, 0, 0, w, h);
-        });
+        function resize() {
+          const w = sceneEl.offsetWidth, h = sceneEl.offsetHeight;
+          hit.width = w; hit.height = h;
+          hitCtx.clearRect(0, 0, w, h);
+          letterImgs.forEach(img => {
+            if (img.complete && img.naturalWidth > 0)
+              hitCtx.drawImage(img, 0, 0, w, h);
+          });
 
-        /* scan for pixel bounding box of the letters */
-        const data = hitCtx.getImageData(0, 0, w, h).data;
-        let minX = w, minY = h, maxX = 0, maxY = 0;
-        const stride = 4;
-        for (let y = 0; y < h; y += stride) {
-          for (let x = 0; x < w; x += stride) {
-            if (data[(y * w + x) * 4 + 3] > 10) {
-              if (x < minX) minX = x;
-              if (x > maxX) maxX = x;
-              if (y < minY) minY = y;
-              if (y > maxY) maxY = y;
+          /* scan for pixel bounding box of the letters */
+          const data = hitCtx.getImageData(0, 0, w, h).data;
+          let minX = w, minY = h, maxX = 0, maxY = 0;
+          const stride = 4;
+          for (let y = 0; y < h; y += stride) {
+            for (let x = 0; x < w; x += stride) {
+              if (data[(y * w + x) * 4 + 3] > 10) {
+                if (x < minX) minX = x;
+                if (x > maxX) maxX = x;
+                if (y < minY) minY = y;
+                if (y > maxY) maxY = y;
+              }
             }
           }
+
+          offX = minX; offY = minY;
+          canvas.style.left = minX + 'px';
+          canvas.style.top = minY + 'px';
+          canvas.style.width = (maxX - minX) + 'px';
+          canvas.style.height = (maxY - minY) + 'px';
+          canvas.width = maxX - minX;
+          canvas.height = maxY - minY;
         }
 
-        offX = minX; offY = minY;
-        canvas.style.left   = minX + 'px';
-        canvas.style.top    = minY + 'px';
-        canvas.style.width  = (maxX - minX) + 'px';
-        canvas.style.height = (maxY - minY) + 'px';
-        canvas.width  = maxX - minX;
-        canvas.height = maxY - minY;
-      }
+        Promise.all(letterImgs.map(img =>
+          img.complete ? Promise.resolve()
+            : new Promise(r => img.addEventListener('load', r))
+        )).then(() => { resize(); window.addEventListener('resize', resize); });
 
-      Promise.all(letterImgs.map(img =>
-        img.complete ? Promise.resolve()
-                     : new Promise(r => img.addEventListener('load', r))
-      )).then(() => { resize(); window.addEventListener('resize', resize); });
-
-      function onLetter(cx, cy) {
-        const hx = Math.floor(cx + offX), hy = Math.floor(cy + offY);
-        if (hx < 0 || hy < 0 || hx >= hit.width || hy >= hit.height) return false;
-        return hitCtx.getImageData(hx, hy, 1, 1).data[3] > 10;
-      }
-
-      const pts  = [];
-      const LIFE = 2000;
-      const FADE = 500;
-
-      canvas.addEventListener('mousemove', e => {
-        const r = canvas.getBoundingClientRect();
-        const x = e.clientX - r.left, y = e.clientY - r.top;
-        if (onLetter(x, y)) {
-          canvas.style.cursor = 'crosshair';
-          pts.push({ x, y, t: performance.now() });
-        } else {
-          canvas.style.cursor = 'default';
-          pts.push(null);
-        }
-      });
-
-      canvas.addEventListener('mouseleave', () => { pts.push(null); canvas.style.cursor = 'default'; });
-
-      (function tick() {
-        const now = performance.now();
-        while (pts.length && (pts[0] === null || now - pts[0].t > LIFE + FADE)) pts.shift();
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.lineWidth   = 4;
-        ctx.lineCap     = 'round';
-        ctx.lineJoin    = 'round';
-        ctx.strokeStyle = '#F5F3E9';
-
-        for (let i = 0; i < pts.length - 1; i++) {
-          const a = pts[i], b = pts[i + 1];
-          if (!a || !b) continue;
-          const age   = now - b.t;
-          const alpha = age < LIFE ? 1 : Math.max(0, 1 - (age - LIFE) / FADE);
-          if (alpha <= 0) continue;
-          ctx.globalAlpha = alpha;
-          ctx.beginPath();
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.stroke();
+        function onLetter(cx, cy) {
+          const hx = Math.floor(cx + offX), hy = Math.floor(cy + offY);
+          if (hx < 0 || hy < 0 || hx >= hit.width || hy >= hit.height) return false;
+          return hitCtx.getImageData(hx, hy, 1, 1).data[3] > 10;
         }
 
-        ctx.globalAlpha = 1;
-        requestAnimationFrame(tick);
+        const pts = [];
+        const LIFE = 2000;
+        const FADE = 500;
+
+        canvas.addEventListener('mousemove', e => {
+          const r = canvas.getBoundingClientRect();
+          const x = e.clientX - r.left, y = e.clientY - r.top;
+          if (onLetter(x, y)) {
+            canvas.style.cursor = 'crosshair';
+            pts.push({ x, y, t: performance.now() });
+          } else {
+            canvas.style.cursor = 'default';
+            pts.push(null);
+          }
+        });
+
+        canvas.addEventListener('mouseleave', () => { pts.push(null); canvas.style.cursor = 'default'; });
+
+        (function tick() {
+          const now = performance.now();
+          while (pts.length && (pts[0] === null || now - pts[0].t > LIFE + FADE)) pts.shift();
+
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.lineWidth = 4;
+          ctx.lineCap = 'round';
+          ctx.lineJoin = 'round';
+          ctx.strokeStyle = '#F5F3E9';
+
+          for (let i = 0; i < pts.length - 1; i++) {
+            const a = pts[i], b = pts[i + 1];
+            if (!a || !b) continue;
+            const age = now - b.t;
+            const alpha = age < LIFE ? 1 : Math.max(0, 1 - (age - LIFE) / FADE);
+            if (alpha <= 0) continue;
+            ctx.globalAlpha = alpha;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+
+          ctx.globalAlpha = 1;
+          requestAnimationFrame(tick);
+        })();
       })();
-    })();
 
-    let prlxTX = 0, prlxTY = 0;
-
+      let prlxTX = 0, prlxTY = 0;
 
 
-    /* ══════════════════════════════════════════════════════════
-       NODE POSITIONS
-    ══════════════════════════════════════════════════════════ */
-    const BASE_PTS = [
-      // 0-2  central body
-      [0.500, 0.535], [0.448, 0.517], [0.552, 0.517],
-      // 3-6  left branch chain → wing tip
-      [0.379, 0.498], [0.304, 0.483], [0.222, 0.477], [0.138, 0.471],
-      // 7-9  left inner tine
-      [0.322, 0.420], [0.291, 0.348], [0.268, 0.276],
-      // 10-12 left mid tine
-      [0.410, 0.383], [0.394, 0.307], [0.383, 0.238],
-      // 13-16 right branch chain → wing tip
-      [0.621, 0.498], [0.696, 0.483], [0.778, 0.477], [0.862, 0.471],
-      // 17-19 right inner tine
-      [0.678, 0.420], [0.709, 0.348], [0.732, 0.276],
-      // 20-22 right mid tine
-      [0.590, 0.383], [0.606, 0.307], [0.617, 0.238],
-      // 23-25 lower junction
-      [0.500, 0.583], [0.463, 0.627], [0.535, 0.620],
-      // 26-29 claws & spike
-      [0.438, 0.682], [0.548, 0.670], [0.567, 0.712], [0.583, 0.759],
-    ];
+
+      /* ══════════════════════════════════════════════════════════
+         NODE POSITIONS
+      ══════════════════════════════════════════════════════════ */
+      const BASE_PTS = [
+        // 0-2  central body
+        [0.500, 0.535], [0.448, 0.517], [0.552, 0.517],
+        // 3-6  left branch chain → wing tip
+        [0.379, 0.498], [0.304, 0.483], [0.222, 0.477], [0.138, 0.471],
+        // 7-9  left inner tine
+        [0.322, 0.420], [0.291, 0.348], [0.268, 0.276],
+        // 10-12 left mid tine
+        [0.410, 0.383], [0.394, 0.307], [0.383, 0.238],
+        // 13-16 right branch chain → wing tip
+        [0.621, 0.498], [0.696, 0.483], [0.778, 0.477], [0.862, 0.471],
+        // 17-19 right inner tine
+        [0.678, 0.420], [0.709, 0.348], [0.732, 0.276],
+        // 20-22 right mid tine
+        [0.590, 0.383], [0.606, 0.307], [0.617, 0.238],
+        // 23-25 lower junction
+        [0.500, 0.583], [0.463, 0.627], [0.535, 0.620],
+        // 26-29 claws & spike
+        [0.438, 0.682], [0.548, 0.670], [0.567, 0.712], [0.583, 0.759],
+      ];
 
 
-    /* ══════════════════════════════════════════════════════════
-       GRAPH SETUP
-    ══════════════════════════════════════════════════════════ */
+      /* ══════════════════════════════════════════════════════════
+         GRAPH SETUP
+      ══════════════════════════════════════════════════════════ */
 
 
-    /* ══════════════════════════════════════════════════════════
-       HOTSPOT NODES → sheet image cards
-       Attached to the 4 extreme corner nodes of the mesh
-    ══════════════════════════════════════════════════════════ */
-    const HOTSPOTS = [
-      { ptIdx:  6, cardId: 'nc-0', side: 'right' },
-      { ptIdx: 16, cardId: 'nc-1', side: 'left'  },
-      { ptIdx: 12, cardId: 'nc-2', side: 'right' },
-      { ptIdx: 19, cardId: 'nc-3', side: 'left'  },
-    ];
-    const HOTSPOT_RADIUS = 130; // px — how close the mouse needs to be
+      /* ══════════════════════════════════════════════════════════
+         HOTSPOT NODES → sheet image cards
+         Attached to the 4 extreme corner nodes of the mesh
+      ══════════════════════════════════════════════════════════ */
+      const HOTSPOTS = [
+        { ptIdx: 6, cardId: 'nc-0', side: 'right' },
+        { ptIdx: 16, cardId: 'nc-1', side: 'left' },
+        { ptIdx: 12, cardId: 'nc-2', side: 'right' },
+        { ptIdx: 19, cardId: 'nc-3', side: 'left' },
+      ];
+      const HOTSPOT_RADIUS = 130; // px — how close the mouse needs to be
 
-    /* ── Position cards from sketch — above DKNR ── */
-    const CARD_LAYOUT = [
-      { id: 'nc-0', left: '5vw',  top: '15vh', rot: -12 },
-      { id: 'nc-1', left: '22vw', top: '7vh',  rot:   5 },
-      { id: 'nc-2', left: '38vw', top: '6vh',  rot:  -5 },
-      { id: 'nc-3', left: '57vw', top: '7vh',  rot:   8 },
-    ];
-    function positionCards() {
-      CARD_LAYOUT.forEach(c => {
-        const el = document.getElementById(c.id);
-        if (!el) return;
-        el.style.left = c.left;
-        el.style.top  = c.top;
-        gsap.set(el, { rotation: c.rot });
-      });
-    }
-    window.addEventListener('load',   positionCards);
-    window.addEventListener('resize', positionCards);
-    setTimeout(positionCards, 400);
+      /* ── Position cards from sketch — above DKNR ── */
+      const CARD_LAYOUT = [
+        { id: 'nc-0', left: '5vw', top: '15vh', rot: -12 },
+        { id: 'nc-1', left: '22vw', top: '7vh', rot: 5 },
+        { id: 'nc-2', left: '38vw', top: '6vh', rot: -5 },
+        { id: 'nc-3', left: '57vw', top: '7vh', rot: 8 },
+      ];
+      function positionCards() {
+        CARD_LAYOUT.forEach(c => {
+          const el = document.getElementById(c.id);
+          if (!el) return;
+          el.style.left = c.left;
+          el.style.top = c.top;
+          gsap.set(el, { rotation: c.rot });
+        });
+      }
+      window.addEventListener('load', positionCards);
+      window.addEventListener('resize', positionCards);
+      setTimeout(positionCards, 400);
 
-    /* ══════════════════════════════════════════════════════════
-       BLUEPRINT GRAPH DATA
-    ══════════════════════════════════════════════════════════ */
-    let nodes = [];
-    let mousePt = { x: -9999, y: -9999 };
+      /* ══════════════════════════════════════════════════════════
+         BLUEPRINT GRAPH DATA
+      ══════════════════════════════════════════════════════════ */
+      let nodes = [];
+      let mousePt = { x: -9999, y: -9999 };
 
-    function buildGraph() {
-      const w = window.innerWidth, h = window.innerHeight;
-      nodes = BASE_PTS.map(p => ({
-        bx: p[0] * w, by: p[1] * h,
-        x:  p[0] * w, y:  p[1] * h,
-        phase: Math.random() * Math.PI * 2,
-        spd:   0.26 + Math.random() * 0.28,
-      }));
-    }
+      function buildGraph() {
+        const w = window.innerWidth, h = window.innerHeight;
+        nodes = BASE_PTS.map(p => ({
+          bx: p[0] * w, by: p[1] * h,
+          x: p[0] * w, y: p[1] * h,
+          phase: Math.random() * Math.PI * 2,
+          spd: 0.26 + Math.random() * 0.28,
+        }));
+      }
 
-    function resizeCanvas() {
-      buildGraph();
-      positionCards();
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+      function resizeCanvas() {
+        buildGraph();
+        positionCards();
+      }
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
 
-    /* ══════════════════════════════════════════════════════════
-       SPOTLIGHT STATE — follows cursor along graph lines
-    ══════════════════════════════════════════════════════════ */
+      /* ══════════════════════════════════════════════════════════
+         SPOTLIGHT STATE — follows cursor along graph lines
+      ══════════════════════════════════════════════════════════ */
 
-    /* ══════════════════════════════════════════════════════════
-       NODE SPRING PHYSICS — fluid "flow" toward mouse
-    ══════════════════════════════════════════════════════════ */
-    function updateNodes(t) {
-      nodes.forEach(n => {
-        const ox   = Math.sin(t * n.spd * 0.5  + n.phase) * 4;
-        const oy   = Math.cos(t * n.spd * 0.42 + n.phase + 1.3) * 3.2;
-        const dx   = mousePt.x - n.bx;
-        const dy   = mousePt.y - n.by;
-        const pull = Math.max(0, 1 - Math.hypot(dx, dy) / 300);
-        n.x += (n.bx + ox + dx * pull * 0.10 - n.x) * 0.055;
-        n.y += (n.by + oy + dy * pull * 0.085 - n.y) * 0.055;
-      });
-    }
+      /* ══════════════════════════════════════════════════════════
+         NODE SPRING PHYSICS — fluid "flow" toward mouse
+      ══════════════════════════════════════════════════════════ */
+      function updateNodes(t) {
+        nodes.forEach(n => {
+          const ox = Math.sin(t * n.spd * 0.5 + n.phase) * 4;
+          const oy = Math.cos(t * n.spd * 0.42 + n.phase + 1.3) * 3.2;
+          const dx = mousePt.x - n.bx;
+          const dy = mousePt.y - n.by;
+          const pull = Math.max(0, 1 - Math.hypot(dx, dy) / 300);
+          n.x += (n.bx + ox + dx * pull * 0.10 - n.x) * 0.055;
+          n.y += (n.by + oy + dy * pull * 0.085 - n.y) * 0.055;
+        });
+      }
 
-    /* ══════════════════════════════════════════════════════════
-       ANIMATION LOOP
-    ══════════════════════════════════════════════════════════ */
-    function animate(t) {
-      updateNodes(t * 0.001);
+      /* ══════════════════════════════════════════════════════════
+         ANIMATION LOOP
+      ══════════════════════════════════════════════════════════ */
+      function animate(t) {
+        updateNodes(t * 0.001);
+        requestAnimationFrame(animate);
+      }
       requestAnimationFrame(animate);
-    }
-    requestAnimationFrame(animate);
 
-    /* ══════════════════════════════════════════════════════════
-       MOUSE INTERACTION
-    ══════════════════════════════════════════════════════════ */
-    let parallaxLive = true;
+      /* ══════════════════════════════════════════════════════════
+         MOUSE INTERACTION
+      ══════════════════════════════════════════════════════════ */
+      let parallaxLive = true;
 
-    /* Hero cards — pinned at top, swing on mouse like a pendulum */
-    const heroMovers = CARD_LAYOUT.map((c, i) => {
-      const el = document.getElementById(c.id);
-      gsap.set(el, { transformOrigin: '50% 0%' });
-      return {
-        rot:  gsap.quickTo(el, 'rotation', { duration: 1.2, ease: 'power3.out' }),
-        base: c.rot,
-        sens: 0.010 + i * 0.003,
-      };
-    });
-
-
-    scene.addEventListener('mousemove', e => {
-      if (!parallaxLive) return;
-      mousePt.x = e.clientX;
-      mousePt.y = e.clientY;
-      prlxTX = (e.clientX / window.innerWidth)  - 0.5;
-      prlxTY = (e.clientY / window.innerHeight) - 0.5;
-      const dx = e.clientX - window.innerWidth  / 2;
-      const dy = e.clientY - window.innerHeight / 2;
-      heroMovers.forEach(m => m.rot(m.base + dx * m.sens));
-    });
-
-    scene.addEventListener('mouseleave', () => {
-      if (!parallaxLive) return;
-      mousePt.x = -9999;
-      mousePt.y = -9999;
-      prlxTX = 0; prlxTY = 0;
-      heroMovers.forEach(m => m.rot(m.base));
-    });
-
-    /* Click a hotspot node → toggle its card; click elsewhere → hide all */
-    const CLICK_RADIUS = 52;
-    scene.addEventListener('click', e => {
-      if (!parallaxLive) return;
-      let hit = null;
-      HOTSPOTS.forEach(h => {
-        const d = Math.hypot(e.clientX - nodes[h.ptIdx].x, e.clientY - nodes[h.ptIdx].y);
-        if (d < CLICK_RADIUS) hit = h;
+      /* Hero cards — pinned at top, swing on mouse like a pendulum */
+      const heroMovers = CARD_LAYOUT.map((c, i) => {
+        const el = document.getElementById(c.id);
+        gsap.set(el, { transformOrigin: '50% 0%' });
+        return {
+          rot: gsap.quickTo(el, 'rotation', { duration: 1.2, ease: 'power3.out' }),
+          base: c.rot,
+          sens: 0.010 + i * 0.003,
+        };
       });
-      HOTSPOTS.forEach(h => {
-        const el = document.getElementById(h.cardId);
-        if (!el) return;
-        if (hit && hit.cardId === h.cardId) el.classList.toggle('visible');
-        else el.classList.remove('visible');
+
+
+      scene.addEventListener('mousemove', e => {
+        if (!parallaxLive) return;
+        mousePt.x = e.clientX;
+        mousePt.y = e.clientY;
+        prlxTX = (e.clientX / window.innerWidth) - 0.5;
+        prlxTY = (e.clientY / window.innerHeight) - 0.5;
+        const dx = e.clientX - window.innerWidth / 2;
+        const dy = e.clientY - window.innerHeight / 2;
+        heroMovers.forEach(m => m.rot(m.base + dx * m.sens));
       });
-    });
 
-    /* Touch: mirror mouse for mobile */
-    scene.addEventListener('touchmove', e => {
-      if (!parallaxLive) return;
-      mousePt.x = e.touches[0].clientX;
-      mousePt.y = e.touches[0].clientY;
-    }, { passive: true });
+      scene.addEventListener('mouseleave', () => {
+        if (!parallaxLive) return;
+        mousePt.x = -9999;
+        mousePt.y = -9999;
+        prlxTX = 0; prlxTY = 0;
+        heroMovers.forEach(m => m.rot(m.base));
+      });
 
-    /* ── Gallery: fan positions & GSAP card parallax ─────────── */
-
-    /* Base (closed): all cards stacked at centre, slight rotation per layer */
-    const CARD_BASE = [
-      { x:  -3, y: 12, rot: -17 },
-      { x:  -1, y:  6, rot:  -7 },
-      { x:   0, y:  0, rot:   1 },
-      { x:   2, y:  5, rot:   9 },
-      { x:   4, y: 10, rot:  18 },
-    ];
-    /* Open fan: cards spread symmetrically, activated by left OR right mouse */
-    const CARD_OPEN = [
-      { x: -400, rot: -4 },
-      { x: -200, rot: -2 },
-      { x:    0, rot:  0 },
-      { x:  200, rot:  2 },
-      { x:  400, rot:  4 },
-    ];
-
-    const sgCardEls = [...document.querySelectorAll('.sg-card')];
-
-    function getCardOffset() {
-      const vw = window.innerWidth;
-      const cw = Math.min(270, Math.max(160, vw * 0.19));
-      const ch = Math.min(365, Math.max(215, vw * 0.255));
-      return { hw: cw / 2, hh: ch / 2 };
-    }
-
-    function initCards() {
-      const { hw, hh } = getCardOffset();
-      sgCardEls.forEach((el, i) => {
-        gsap.set(el, {
-          xPercent: 0, yPercent: 0,
-          x: CARD_BASE[i].x - hw,
-          y: CARD_BASE[i].y - hh,
-          rotation: CARD_BASE[i].rot,
-          zIndex: i + 1,
+      /* Click a hotspot node → toggle its card; click elsewhere → hide all */
+      const CLICK_RADIUS = 52;
+      scene.addEventListener('click', e => {
+        if (!parallaxLive) return;
+        let hit = null;
+        HOTSPOTS.forEach(h => {
+          const d = Math.hypot(e.clientX - nodes[h.ptIdx].x, e.clientY - nodes[h.ptIdx].y);
+          if (d < CLICK_RADIUS) hit = h;
+        });
+        HOTSPOTS.forEach(h => {
+          const el = document.getElementById(h.cardId);
+          if (!el) return;
+          if (hit && hit.cardId === h.cardId) el.classList.toggle('visible');
+          else el.classList.remove('visible');
         });
       });
-    }
-    initCards();
 
-    /* quickTo movers — one per card */
-    const sgMovers = sgCardEls.map((el, i) => ({
-      x:     gsap.quickTo(el, 'x',        { duration: 0.35, ease: 'power2.out' }),
-      y:     gsap.quickTo(el, 'y',        { duration: 0.35, ease: 'power2.out' }),
-      rot:   gsap.quickTo(el, 'rotation', { duration: 0.45, ease: 'power2.out' }),
-      depth: parseFloat(el.dataset.depth) || 0.08,
-    }));
+      /* Touch: mirror mouse for mobile */
+      scene.addEventListener('touchmove', e => {
+        if (!parallaxLive) return;
+        mousePt.x = e.touches[0].clientX;
+        mousePt.y = e.touches[0].clientY;
+      }, { passive: true });
 
-    function animateGalleryIn() {
-      const { hw, hh } = getCardOffset();
-      /* Place cards at the fanned-open positions so each card is individually visible */
-      sgCardEls.forEach((el, i) => {
-        gsap.set(el, {
-          opacity: 1,
-          x: CARD_OPEN[i].x - hw,
-          y: CARD_BASE[i].y - hh,
-          rotation: CARD_OPEN[i].rot,
-        });
-      });
-      /* Collapse to base stack using the same quickTo movers mouse uses */
-      sgMovers.forEach((m, i) => {
-        m.x(CARD_BASE[i].x - hw);
-        m.y(CARD_BASE[i].y - hh);
-        m.rot(CARD_BASE[i].rot);
-      });
-      gsap.fromTo('.sg-title',
-        { opacity: 0, y: -20 },
-        { opacity: 1, y: 0, duration: 0.65, ease: 'power3.out' }
-      );
-      gsap.fromTo('.sg-sub',
-        { opacity: 0 },
-        { opacity: 1, duration: 1.0, delay: 0.25, ease: 'power2.out' }
-      );
-    }
+      /* ── Gallery: fan positions & GSAP card parallax ─────────── */
 
-    /* Gallery mouse: fan opens left OR right based on distance from centre */
-    let currentSpread = 0;
+      /* Base (closed): all cards stacked at centre, slight rotation per layer */
+      const CARD_BASE = [
+        { x: -3, y: 12, rot: -17 },
+        { x: -1, y: 6, rot: -7 },
+        { x: 0, y: 0, rot: 1 },
+        { x: 2, y: 5, rot: 9 },
+        { x: 4, y: 10, rot: 18 },
+      ];
+      /* Open fan: cards spread symmetrically, activated by left OR right mouse */
+      const CARD_OPEN = [
+        { x: -400, rot: -4 },
+        { x: -200, rot: -2 },
+        { x: 0, rot: 0 },
+        { x: 200, rot: 2 },
+        { x: 400, rot: 4 },
+      ];
 
-    galleryEl.addEventListener('mousemove', e => {
-      if (pageIndex !== 1 || transitioning) return;
-      const { hw, hh } = getCardOffset();
-      const cx = window.innerWidth  / 2;
-      const cy = window.innerHeight / 2;
-      const dx = e.clientX - cx;
-      const dy = e.clientY - cy;
-      currentSpread = Math.min(1, Math.abs(dx) / (window.innerWidth * 0.38));
+      const sgCardEls = [...document.querySelectorAll('.sg-card')];
 
-      sgMovers.forEach((m, i) => {
-        const bx  = CARD_BASE[i].x - hw;
-        const ox  = CARD_OPEN[i].x - hw;
-        const br  = CARD_BASE[i].rot;
-        const or_ = CARD_OPEN[i].rot;
-        m.x(bx + (ox - bx) * currentSpread + dx * m.depth);
-        m.y(CARD_BASE[i].y - hh + dy * m.depth);
-        m.rot(br + (or_ - br) * currentSpread);
-      });
-    });
-    galleryEl.addEventListener('mouseleave', () => {
-      currentSpread = 0;
-      const { hw, hh } = getCardOffset();
-      sgMovers.forEach((m, i) => {
-        m.x(CARD_BASE[i].x - hw);
-        m.y(CARD_BASE[i].y - hh);
-        m.rot(CARD_BASE[i].rot);
-      });
-    });
+      function getCardOffset() {
+        const vw = window.innerWidth;
+        const cw = Math.min(270, Math.max(160, vw * 0.19));
+        const ch = Math.min(365, Math.max(215, vw * 0.255));
+        return { hw: cw / 2, hh: ch / 2 };
+      }
 
-    /* ── K5 travel: fixed clone scrolls from gallery to ct-heading ── */
-    const k5Travel       = document.getElementById('k5-travel');
-    const k5GalleryCard  = document.getElementById('k5-gallery-card');
-    let k5TravelActive   = false;
-    let k5TravelStartY   = 0;
-    let k5TravelEndY     = 0;
-    let k5TravelRange    = 0;
-    let k5TravelTh       = 0;
-    let k5SigSection     = null;
-    let sigOnCardActive  = false;
-    const K5_SCROLL_FACTOR = 0.4;
-    const K5_STRAIGHTEN    = 0.28;
-    const K5_START_ROT     = CARD_BASE[4].rot;
-
-    function setupK5Travel() {
-      k5SigSection      = document.querySelector('.sig-section');
-      const k5Rect      = k5GalleryCard.getBoundingClientRect();
-      const sigDocTop   = k5SigSection.getBoundingClientRect().top;
-      const sigH        = k5SigSection.offsetHeight;
-
-      const centerY = k5Rect.top  + k5Rect.height / 2;
-      const tw      = parseFloat(getComputedStyle(k5Travel).width);
-      const th      = parseFloat(getComputedStyle(k5Travel).height);
-      k5TravelTh    = th;
-
-      k5TravelStartY = centerY - th / 2;
-
-      /* Card centre meets sig-section centre at the same scroll moment */
-      const targetDocY = sigDocTop + sigH / 2 - th / 2;
-      k5TravelRange    = (targetDocY - k5TravelStartY) / (1 + K5_SCROLL_FACTOR);
-      k5TravelEndY     = k5TravelStartY + K5_SCROLL_FACTOR * k5TravelRange;
-
-      gsap.set(k5Travel, {
-        display:  'block',
-        left:     (window.innerWidth - tw) / 2,
-        top:      0,
-        y:        k5TravelStartY,
-        rotation: K5_START_ROT,
-        opacity:  1,
-      });
-      gsap.set('#sig-on-card', { clipPath: 'inset(0 100% 0 0)' });
-      gsap.set(k5GalleryCard, { opacity: 0 });
-      sigOnCardActive  = false;
-      k5TravelActive   = true;
-    }
-
-    function k5TravelTick() {
-      if (!k5TravelActive) return;
-      const s = window.scrollY;
-      const p = Math.min(1, Math.max(0, s / k5TravelRange));
-
-      const rotP   = Math.min(1, p / K5_STRAIGHTEN);
-      const newRot = K5_START_ROT * (1 - rotP);
-
-      let cardY;
-      if (p < 1) {
-        cardY = k5TravelStartY + (k5TravelEndY - k5TravelStartY) * p;
-
-        /* Leaving the black section — reset everything */
-        if (sigOnCardActive) {
-          sigOnCardActive = false;
-          gsap.killTweensOf('#sig-on-card');
-          gsap.killTweensOf('#k5-travel > img');
-          gsap.killTweensOf('#sig-ticker');
-          gsap.killTweensOf('#sig-ticker-2');
-          gsap.set('#sig-on-card',     { clipPath: 'inset(0 100% 0 0)' });
-          gsap.set('#k5-travel > img', { scale: 1, filter: 'grayscale(0) brightness(1)' });
-          gsap.set('#sig-ticker',      { opacity: 0 });
-          gsap.set('#sig-ticker-2',    { opacity: 0 });
-        }
-      } else {
-        /* Arrived: track sig-section centre */
-        const r = k5SigSection.getBoundingClientRect();
-        cardY   = r.top + r.height / 2 - k5TravelTh / 2;
-
-        /* Trigger cinematic signature sequence once */
-        if (!sigOnCardActive) {
-          sigOnCardActive = true;
-
-          /* 0 — cinematic entrance: slide in from opposite sides */
-          gsap.fromTo('#sig-ticker',
-            { opacity: 0, x: -60 },
-            { opacity: 1, x: 0, duration: 1.1, ease: 'power3.out', delay: 0.8 }
-          );
-          gsap.fromTo('#sig-ticker-2',
-            { opacity: 0, x: 60 },
-            { opacity: 1, x: 0, duration: 1.1, ease: 'power3.out', delay: 0.8 }
-          );
-
-          /* 1 — brief flash of light across the card */
-          gsap.fromTo('#k5-travel > img', {
-            filter: 'brightness(1)',
-          }, {
-            filter: 'brightness(1.22)',
-            duration: 0.18, ease: 'power2.out', delay: 0.3,
-            yoyo: true, repeat: 1,
+      function initCards() {
+        const { hw, hh } = getCardOffset();
+        sgCardEls.forEach((el, i) => {
+          gsap.set(el, {
+            xPercent: 0, yPercent: 0,
+            x: CARD_BASE[i].x - hw,
+            y: CARD_BASE[i].y - hh,
+            rotation: CARD_BASE[i].rot,
+            zIndex: i + 1,
           });
-
-          /* 3 — signature draws: fast initial stroke, then slow cinematic sweep */
-          const tl = gsap.timeline({ delay: 0.38 });
-          tl.fromTo('#sig-on-card',
-            { clipPath: 'inset(0 100% 0 0)' },
-            { clipPath: 'inset(0 55% 0 0)', duration: 0.45, ease: 'power4.in' }
-          )
-          .to('#sig-on-card', {
-            clipPath: 'inset(0 0% 0 0)', duration: 3.0, ease: 'power2.out',
-          })
-          /* 4 — card snaps to black & white as signature finishes */
-          .to('#k5-travel > img', {
-            filter: 'grayscale(1) brightness(0.88)',
-            duration: 0.35, ease: 'power3.in',
-          }, '-=0.1');
-        }
-      }
-
-      gsap.set(k5Travel, { y: cardY, rotation: newRot });
-    }
-
-    function stopK5Travel() {
-      k5TravelActive  = false;
-      sigOnCardActive = false;
-      gsap.killTweensOf('#sig-on-card');
-      gsap.killTweensOf('#k5-travel > img');
-      gsap.killTweensOf('#sig-ticker');
-      gsap.killTweensOf('#sig-ticker-2');
-      gsap.set('#sig-on-card',     { clipPath: 'inset(0 100% 0 0)' });
-      gsap.set('#k5-travel > img', { scale: 1, filter: 'grayscale(0) brightness(1)' });
-      gsap.set('#sig-ticker',      { opacity: 0 });
-      gsap.set('#sig-ticker-2',    { opacity: 0 });
-      gsap.set(k5Travel,           { display: 'none', opacity: 1, rotation: 0 });
-      gsap.set(k5GalleryCard,      { opacity: 1 });
-    }
-
-    window.addEventListener('scroll', k5TravelTick, { passive: true });
-
-    /* ══════════════════════════════════════════════════════════
-       PAGE TRANSITIONS — hero(0) → gallery(1) → contact(2)
-    ══════════════════════════════════════════════════════════ */
-    let pageIndex = 0, transitioning = false;
-    let wheelP = 0, wheelTarget = 0;
-    let wheelDecayTimer = null;
-    const WHEEL_RANGE = 340;
-
-    function applyWheel(p) {
-      /* p 0→1: scene drains to grey then vanishes completely */
-      gsap.to('#scene', {
-        filter:  `grayscale(${p}) brightness(${1 - p * 0.22})`,
-        opacity: 1 - p,
-        duration: .25, ease: 'none', overwrite: 'auto'
-      });
-      if (scrollHint) gsap.to(scrollHint, { opacity: 1 - p * 5, duration: .15, overwrite: 'auto' });
-    }
-
-    function goToGallery() {
-      if (transitioning) return;
-      transitioning = true; parallaxLive = false;
-      /* scene is already transparent from applyWheel — just flash fill and swap */
-      gsap.set(fill, { background: '#2f9dd3', opacity: 1 });
-      gsap.timeline()
-        .call(() => {
-          document.body.classList.add('gallery');
-          pageIndex = 1; wheelP = 0; wheelTarget = 0;
-          initCards();
-          /* Cards already in position — reveal them now so they appear
-             pre-loaded when the fill uncovers the gallery */
-          gsap.set(sgCardEls, { opacity: 1 });
-          gsap.set('#scene',  { filter: 'grayscale(0) brightness(1)', opacity: 1 });
-          if (scrollHint) gsap.set(scrollHint, { opacity: 1 });
-        })
-        .to(fill, { opacity: 0, duration: .90, ease: 'power2.out' }, '+=0.05')
-        .call(() => {
-          transitioning = false;
-          gsap.fromTo('.sg-title',
-            { opacity: 0, y: -20 },
-            { opacity: 1, y: 0, duration: 0.65, ease: 'power3.out' }
-          );
-          gsap.fromTo('.sg-sub',
-            { opacity: 0 },
-            { opacity: 1, duration: 1.0, delay: 0.25, ease: 'power2.out' }
-          );
         });
-    }
-
-    function unlockGalleryPage() {
-      if (transitioning) return;
-      transitioning = true;
-      document.body.classList.remove('gallery');
-      document.body.classList.add('gallery-open');
-      pageIndex = 2;
-      window.scrollTo(0, 0);
-      /* Start K5 travel after layout settles */
-      requestAnimationFrame(() => { setupK5Travel(); transitioning = false; });
-    }
-
-    function goToGalleryFromContact() {
-      if (transitioning) return;
-      transitioning = true;
-      gsap.set(fill, { background: '#1A1A1A' });
-      gsap.timeline()
-        .to(fill, { opacity: 1, duration: 0.28, ease: 'power2.in' })
-        .call(() => {
-          stopK5Travel();
-          document.body.classList.remove('gallery-open');
-          document.body.classList.add('gallery');
-          pageIndex = 1; window.scrollTo(0, 0);
-          wheelP = 0; wheelTarget = 0; currentSpread = 0;
-          initCards();
-          gsap.set(sgCardEls, { opacity: 1 });
-        })
-        .to(fill, { opacity: 0, duration: 0.55, ease: 'power2.out' }, '+=0.05')
-        .call(() => { transitioning = false; });
-    }
-
-    function goToHero() {
-      if (transitioning) return;
-      transitioning = true;
-      gsap.set(fill, { background: '#2f9dd3' });
-      gsap.timeline()
-        .to(fill, { opacity: 1, duration: .25, ease: 'power2.in' })
-        .call(() => {
-          document.body.classList.remove('gallery');
-          pageIndex = 0; wheelP = 0; wheelTarget = 0;
-          parallaxLive = true; mousePt.x = -9999; mousePt.y = -9999;
-          gsap.set('#scene', { filter: 'grayscale(0) brightness(1)', opacity: 1 });
-        })
-        .to(fill, { opacity: 0, duration: .40, ease: 'power2.out' }, '+=0.05')
-        .call(() => { transitioning = false; });
-    }
-
-    window.addEventListener('wheel', e => {
-      if (!introComplete) { e.preventDefault(); return; }
-      if (pageIndex === 2) {
-        if (window.scrollY === 0 && e.deltaY < 0) {
-          e.preventDefault();
-          goToGalleryFromContact();
-        }
-        return;
       }
-      if (pageIndex === 1) {
+      initCards();
+
+      /* quickTo movers — one per card */
+      const sgMovers = sgCardEls.map((el, i) => ({
+        x: gsap.quickTo(el, 'x', { duration: 0.35, ease: 'power2.out' }),
+        y: gsap.quickTo(el, 'y', { duration: 0.35, ease: 'power2.out' }),
+        rot: gsap.quickTo(el, 'rotation', { duration: 0.45, ease: 'power2.out' }),
+        depth: parseFloat(el.dataset.depth) || 0.08,
+      }));
+
+      function animateGalleryIn() {
+        const { hw, hh } = getCardOffset();
+        /* Place cards at the fanned-open positions so each card is individually visible */
+        sgCardEls.forEach((el, i) => {
+          gsap.set(el, {
+            opacity: 1,
+            x: CARD_OPEN[i].x - hw,
+            y: CARD_BASE[i].y - hh,
+            rotation: CARD_OPEN[i].rot,
+          });
+        });
+        /* Collapse to base stack using the same quickTo movers mouse uses */
+        sgMovers.forEach((m, i) => {
+          m.x(CARD_BASE[i].x - hw);
+          m.y(CARD_BASE[i].y - hh);
+          m.rot(CARD_BASE[i].rot);
+        });
+        gsap.fromTo('.sg-title',
+          { opacity: 0, y: -20 },
+          { opacity: 1, y: 0, duration: 0.65, ease: 'power3.out' }
+        );
+        gsap.fromTo('.sg-sub',
+          { opacity: 0 },
+          { opacity: 1, duration: 1.0, delay: 0.25, ease: 'power2.out' }
+        );
+      }
+
+      /* Gallery mouse: fan opens left OR right based on distance from centre */
+      let currentSpread = 0;
+
+      galleryEl.addEventListener('mousemove', e => {
+        if (pageIndex !== 1 || transitioning) return;
+        const { hw, hh } = getCardOffset();
+        const cx = window.innerWidth / 2;
+        const cy = window.innerHeight / 2;
+        const dx = e.clientX - cx;
+        const dy = e.clientY - cy;
+        currentSpread = Math.min(1, Math.abs(dx) / (window.innerWidth * 0.38));
+
+        sgMovers.forEach((m, i) => {
+          const bx = CARD_BASE[i].x - hw;
+          const ox = CARD_OPEN[i].x - hw;
+          const br = CARD_BASE[i].rot;
+          const or_ = CARD_OPEN[i].rot;
+          m.x(bx + (ox - bx) * currentSpread + dx * m.depth);
+          m.y(CARD_BASE[i].y - hh + dy * m.depth);
+          m.rot(br + (or_ - br) * currentSpread);
+        });
+      });
+      galleryEl.addEventListener('mouseleave', () => {
+        currentSpread = 0;
+        const { hw, hh } = getCardOffset();
+        sgMovers.forEach((m, i) => {
+          m.x(CARD_BASE[i].x - hw);
+          m.y(CARD_BASE[i].y - hh);
+          m.rot(CARD_BASE[i].rot);
+        });
+      });
+
+      /* ── K5 travel: fixed clone scrolls from gallery to ct-heading ── */
+      const k5Travel = document.getElementById('k5-travel');
+      const k5GalleryCard = document.getElementById('k5-gallery-card');
+      let k5TravelActive = false;
+      let k5TravelStartY = 0;
+      let k5TravelEndY = 0;
+      let k5TravelRange = 0;
+      let k5TravelTh = 0;
+      let k5SigSection = null;
+      let sigOnCardActive = false;
+      const K5_SCROLL_FACTOR = 0.4;
+      const K5_STRAIGHTEN = 0.28;
+      const K5_START_ROT = CARD_BASE[4].rot;
+
+      function setupK5Travel() {
+        k5SigSection = document.querySelector('.sig-section');
+        const k5Rect = k5GalleryCard.getBoundingClientRect();
+        const sigDocTop = k5SigSection.getBoundingClientRect().top;
+        const sigH = k5SigSection.offsetHeight;
+
+        const centerY = k5Rect.top + k5Rect.height / 2;
+        const tw = parseFloat(getComputedStyle(k5Travel).width);
+        const th = parseFloat(getComputedStyle(k5Travel).height);
+        k5TravelTh = th;
+
+        k5TravelStartY = centerY - th / 2;
+
+        /* Card centre meets sig-section centre at the same scroll moment */
+        const targetDocY = sigDocTop + sigH / 2 - th / 2;
+        k5TravelRange = (targetDocY - k5TravelStartY) / (1 + K5_SCROLL_FACTOR);
+        k5TravelEndY = k5TravelStartY + K5_SCROLL_FACTOR * k5TravelRange;
+
+        gsap.set(k5Travel, {
+          display: 'block',
+          left: (window.innerWidth - tw) / 2,
+          top: 0,
+          y: k5TravelStartY,
+          rotation: K5_START_ROT,
+          opacity: 1,
+        });
+        gsap.set('#sig-on-card', { clipPath: 'inset(0 100% 0 0)' });
+        gsap.set(k5GalleryCard, { opacity: 0 });
+        sigOnCardActive = false;
+        k5TravelActive = true;
+      }
+
+      function k5TravelTick() {
+        if (!k5TravelActive) return;
+        const s = window.scrollY;
+        const p = Math.min(1, Math.max(0, s / k5TravelRange));
+
+        const rotP = Math.min(1, p / K5_STRAIGHTEN);
+        const newRot = K5_START_ROT * (1 - rotP);
+
+        let cardY;
+        if (p < 1) {
+          cardY = k5TravelStartY + (k5TravelEndY - k5TravelStartY) * p;
+
+          /* Leaving the black section — reset everything */
+          if (sigOnCardActive) {
+            sigOnCardActive = false;
+            gsap.killTweensOf('#sig-on-card');
+            gsap.killTweensOf('#k5-travel > img');
+            gsap.killTweensOf('#sig-ticker');
+            gsap.killTweensOf('#sig-ticker-2');
+            gsap.set('#sig-on-card', { clipPath: 'inset(0 100% 0 0)' });
+            gsap.set('#k5-travel > img', { scale: 1, filter: 'grayscale(0) brightness(1)' });
+            gsap.set('#sig-ticker', { opacity: 0 });
+            gsap.set('#sig-ticker-2', { opacity: 0 });
+          }
+        } else {
+          /* Arrived: track sig-section centre */
+          const r = k5SigSection.getBoundingClientRect();
+          cardY = r.top + r.height / 2 - k5TravelTh / 2;
+
+          /* Trigger cinematic signature sequence once */
+          if (!sigOnCardActive) {
+            sigOnCardActive = true;
+
+            /* 0 — cinematic entrance: slide in from opposite sides */
+            gsap.fromTo('#sig-ticker',
+              { opacity: 0, x: -60 },
+              { opacity: 1, x: 0, duration: 1.1, ease: 'power3.out', delay: 0.8 }
+            );
+            gsap.fromTo('#sig-ticker-2',
+              { opacity: 0, x: 60 },
+              { opacity: 1, x: 0, duration: 1.1, ease: 'power3.out', delay: 0.8 }
+            );
+
+            /* 1 — brief flash of light across the card */
+            gsap.fromTo('#k5-travel > img', {
+              filter: 'brightness(1)',
+            }, {
+              filter: 'brightness(1.22)',
+              duration: 0.18, ease: 'power2.out', delay: 0.3,
+              yoyo: true, repeat: 1,
+            });
+
+            /* 3 — signature draws: fast initial stroke, then slow cinematic sweep */
+            const tl = gsap.timeline({ delay: 0.38 });
+            tl.fromTo('#sig-on-card',
+              { clipPath: 'inset(0 100% 0 0)' },
+              { clipPath: 'inset(0 55% 0 0)', duration: 0.45, ease: 'power4.in' }
+            )
+              .to('#sig-on-card', {
+                clipPath: 'inset(0 0% 0 0)', duration: 3.0, ease: 'power2.out',
+              })
+              /* 4 — card snaps to black & white as signature finishes */
+              .to('#k5-travel > img', {
+                filter: 'grayscale(1) brightness(0.88)',
+                duration: 0.35, ease: 'power3.in',
+              }, '-=0.1');
+          }
+        }
+
+        gsap.set(k5Travel, { y: cardY, rotation: newRot });
+      }
+
+      function stopK5Travel() {
+        k5TravelActive = false;
+        sigOnCardActive = false;
+        gsap.killTweensOf('#sig-on-card');
+        gsap.killTweensOf('#k5-travel > img');
+        gsap.killTweensOf('#sig-ticker');
+        gsap.killTweensOf('#sig-ticker-2');
+        gsap.set('#sig-on-card', { clipPath: 'inset(0 100% 0 0)' });
+        gsap.set('#k5-travel > img', { scale: 1, filter: 'grayscale(0) brightness(1)' });
+        gsap.set('#sig-ticker', { opacity: 0 });
+        gsap.set('#sig-ticker-2', { opacity: 0 });
+        gsap.set(k5Travel, { display: 'none', opacity: 1, rotation: 0 });
+        gsap.set(k5GalleryCard, { opacity: 1 });
+      }
+
+      window.addEventListener('scroll', k5TravelTick, { passive: true });
+
+      /* ══════════════════════════════════════════════════════════
+         PAGE TRANSITIONS — hero(0) → gallery(1) → contact(2)
+      ══════════════════════════════════════════════════════════ */
+      let pageIndex = 0, transitioning = false;
+      let wheelP = 0, wheelTarget = 0;
+      let wheelDecayTimer = null;
+      const WHEEL_RANGE = 340;
+
+      function applyWheel(p) {
+        /* p 0→1: scene drains to grey then vanishes completely */
+        gsap.to('#scene', {
+          filter: `grayscale(${p}) brightness(${1 - p * 0.22})`,
+          opacity: 1 - p,
+          duration: .25, ease: 'none', overwrite: 'auto'
+        });
+        if (scrollHint) gsap.to(scrollHint, { opacity: 1 - p * 5, duration: .15, overwrite: 'auto' });
+      }
+
+      function goToGallery() {
+        if (transitioning) return;
+        transitioning = true; parallaxLive = false;
+        /* scene is already transparent from applyWheel — just flash fill and swap */
+        gsap.set(fill, { background: '#2f9dd3', opacity: 1 });
+        gsap.timeline()
+          .call(() => {
+            document.body.classList.add('gallery');
+            pageIndex = 1; wheelP = 0; wheelTarget = 0;
+            initCards();
+            /* Cards already in position — reveal them now so they appear
+               pre-loaded when the fill uncovers the gallery */
+            gsap.set(sgCardEls, { opacity: 1 });
+            gsap.set('#scene', { filter: 'grayscale(0) brightness(1)', opacity: 1 });
+            if (scrollHint) gsap.set(scrollHint, { opacity: 1 });
+          })
+          .to(fill, { opacity: 0, duration: .90, ease: 'power2.out' }, '+=0.05')
+          .call(() => {
+            transitioning = false;
+            gsap.fromTo('.sg-title',
+              { opacity: 0, y: -20 },
+              { opacity: 1, y: 0, duration: 0.65, ease: 'power3.out' }
+            );
+            gsap.fromTo('.sg-sub',
+              { opacity: 0 },
+              { opacity: 1, duration: 1.0, delay: 0.25, ease: 'power2.out' }
+            );
+          });
+      }
+
+      function unlockGalleryPage() {
+        if (transitioning) return;
+        transitioning = true;
+        document.body.classList.remove('gallery');
+        document.body.classList.add('gallery-open');
+        pageIndex = 2;
+        window.scrollTo(0, 0);
+        /* Start K5 travel after layout settles */
+        requestAnimationFrame(() => { setupK5Travel(); transitioning = false; });
+      }
+
+      function goToGalleryFromContact() {
+        if (transitioning) return;
+        transitioning = true;
+        gsap.set(fill, { background: '#1A1A1A' });
+        gsap.timeline()
+          .to(fill, { opacity: 1, duration: 0.28, ease: 'power2.in' })
+          .call(() => {
+            stopK5Travel();
+            document.body.classList.remove('gallery-open');
+            document.body.classList.add('gallery');
+            pageIndex = 1; window.scrollTo(0, 0);
+            wheelP = 0; wheelTarget = 0; currentSpread = 0;
+            initCards();
+            gsap.set(sgCardEls, { opacity: 1 });
+          })
+          .to(fill, { opacity: 0, duration: 0.55, ease: 'power2.out' }, '+=0.05')
+          .call(() => { transitioning = false; });
+      }
+
+      function goToHero() {
+        if (transitioning) return;
+        transitioning = true;
+        gsap.set(fill, { background: '#2f9dd3' });
+        gsap.timeline()
+          .to(fill, { opacity: 1, duration: .25, ease: 'power2.in' })
+          .call(() => {
+            document.body.classList.remove('gallery');
+            pageIndex = 0; wheelP = 0; wheelTarget = 0;
+            parallaxLive = true; mousePt.x = -9999; mousePt.y = -9999;
+            gsap.set('#scene', { filter: 'grayscale(0) brightness(1)', opacity: 1 });
+          })
+          .to(fill, { opacity: 0, duration: .40, ease: 'power2.out' }, '+=0.05')
+          .call(() => { transitioning = false; });
+      }
+
+      window.addEventListener('wheel', e => {
+        if (!introComplete) { e.preventDefault(); return; }
+        if (pageIndex === 2) {
+          if (window.scrollY === 0 && e.deltaY < 0) {
+            e.preventDefault();
+            goToGalleryFromContact();
+          }
+          return;
+        }
+        if (pageIndex === 1) {
+          if (transitioning) return;
+          e.preventDefault();
+          if (e.deltaY > 20) {
+            if (currentSpread < 0.05) {
+              unlockGalleryPage();
+            } else {
+              transitioning = true;
+              currentSpread = 0;
+              const { hw, hh } = getCardOffset();
+              sgMovers.forEach((m, i) => {
+                m.x(CARD_BASE[i].x - hw);
+                m.y(CARD_BASE[i].y - hh);
+                m.rot(CARD_BASE[i].rot);
+              });
+              gsap.delayedCall(0.9, () => { transitioning = false; unlockGalleryPage(); });
+            }
+          } else if (e.deltaY < -20) goToHero();
+          return;
+        }
         if (transitioning) return;
         e.preventDefault();
-        if (e.deltaY > 20) {
-          if (currentSpread < 0.05) {
-            unlockGalleryPage();
-          } else {
-            transitioning = true;
-            currentSpread = 0;
-            const { hw, hh } = getCardOffset();
-            sgMovers.forEach((m, i) => {
-              m.x(CARD_BASE[i].x - hw);
-              m.y(CARD_BASE[i].y - hh);
-              m.rot(CARD_BASE[i].rot);
-            });
-            gsap.delayedCall(0.9, () => { transitioning = false; unlockGalleryPage(); });
-          }
-        } else if (e.deltaY < -20) goToHero();
-        return;
-      }
-      if (transitioning) return;
-      e.preventDefault();
-      wheelTarget = Math.max(0, Math.min(1, wheelTarget + e.deltaY / WHEEL_RANGE));
-      clearTimeout(wheelDecayTimer);
-      wheelDecayTimer = setTimeout(() => {
-        if (pageIndex === 0 && !transitioning) wheelTarget = 0;
-      }, 950);
-    }, { passive: false });
+        wheelTarget = Math.max(0, Math.min(1, wheelTarget + e.deltaY / WHEEL_RANGE));
+        clearTimeout(wheelDecayTimer);
+        wheelDecayTimer = setTimeout(() => {
+          if (pageIndex === 0 && !transitioning) wheelTarget = 0;
+        }, 950);
+      }, { passive: false });
 
-    let touchStartY = null;
-    window.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; }, { passive: true });
-    window.addEventListener('touchmove', e => {
-      if (touchStartY == null || transitioning) return;
-      if (pageIndex === 2) {
-        if (window.scrollY === 0 && e.touches[0].clientY > touchStartY + 30) goToGalleryFromContact();
-        return;
-      }
-      if (pageIndex === 1) {
+      let touchStartY = null;
+      window.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; }, { passive: true });
+      window.addEventListener('touchmove', e => {
+        if (touchStartY == null || transitioning) return;
+        if (pageIndex === 2) {
+          if (window.scrollY === 0 && e.touches[0].clientY > touchStartY + 30) goToGalleryFromContact();
+          return;
+        }
+        if (pageIndex === 1) {
+          const dy = touchStartY - e.touches[0].clientY;
+          touchStartY = e.touches[0].clientY;
+          if (dy > 18 && currentSpread < 0.05) unlockGalleryPage();
+          else if (dy < -18) goToHero();
+          return;
+        }
         const dy = touchStartY - e.touches[0].clientY;
         touchStartY = e.touches[0].clientY;
-        if (dy > 18 && currentSpread < 0.05) unlockGalleryPage();
-        else if (dy < -18) goToHero();
-        return;
-      }
-      const dy = touchStartY - e.touches[0].clientY;
-      touchStartY = e.touches[0].clientY;
-      wheelTarget = Math.max(0, Math.min(1, wheelTarget + dy / 560));
-    }, { passive: true });
+        wheelTarget = Math.max(0, Math.min(1, wheelTarget + dy / 560));
+      }, { passive: true });
 
-    gsap.ticker.add(() => {
-      if (!introComplete || pageIndex !== 0 || transitioning) return;
-      const next = wheelP + (wheelTarget - wheelP) * 0.14;
-      if (Math.abs(next - wheelP) > 0.0005) { wheelP = next; applyWheel(wheelP); }
-      if (wheelP >= 0.97) goToGallery();
-    });
-
-
-    /* ── Double-click contact → back ─────────────────────────── */
-    document.getElementById('contact').addEventListener('dblclick', goToGalleryFromContact);
-
-    /* ── Contact form ─────────────────────────────────────────── */
-    document.getElementById('contactForm').addEventListener('submit', async e => {
-      e.preventDefault();
-      const btn    = document.getElementById('submitBtn');
-      const status = document.getElementById('formStatus');
-      const data   = Object.fromEntries(new FormData(e.target).entries());
-      btn.textContent = 'Sending...'; btn.disabled = true; status.textContent = '';
-      try {
-        const ok = await submitToNotion(data);
-        if (ok) { btn.textContent = 'Message sent ✓'; btn.classList.add('sent'); status.textContent = "We'll be in touch."; }
-        else throw new Error();
-      } catch {
-        btn.textContent = 'Submit'; btn.disabled = false;
-        status.textContent = 'Something went wrong — try emailing BADIDHICHEM7@GMAIL.COM';
-      }
-    });
-
-    /* ── Signature section reveal ───────────────────────────── */
-    (function initSigReveal() {
-      const sigWrap = document.querySelector('.sig-wrap');
-      const bgLines = document.querySelectorAll('.sig-bg-line');
-      const eyebrow = document.querySelector('.sig-eyebrow');
-      if (!sigWrap) return;
-
-      /* Signature draws left → right when section enters view */
-      gsap.to(sigWrap, {
-        clipPath: 'inset(0 0% 0 0)',
-        duration: 2.8,
-        ease: 'power2.inOut',
-        scrollTrigger: {
-          trigger: '.sig-section',
-          scroller: 'body',
-          start: 'top 65%',
-          toggleActions: 'play none none none',
-        },
+      gsap.ticker.add(() => {
+        if (!introComplete || pageIndex !== 0 || transitioning) return;
+        const next = wheelP + (wheelTarget - wheelP) * 0.14;
+        if (Math.abs(next - wheelP) > 0.0005) { wheelP = next; applyWheel(wheelP); }
+        if (wheelP >= 0.97) goToGallery();
       });
 
-      /* Text lines drift in opposite horizontal directions, scrubbed by scroll */
-      const scrubTrigger = {
-        trigger: '.sig-section',
-        scroller: 'body',
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: 1.2,
-      };
-      if (bgLines[0]) gsap.to(bgLines[0], { x: '20vw',  ease: 'none', scrollTrigger: scrubTrigger });
-      if (bgLines[1]) gsap.to(bgLines[1], { x: '-20vw', ease: 'none', scrollTrigger: scrubTrigger });
 
-      /* Eyebrow fades in */
-      gsap.to(eyebrow, {
-        opacity: 1,
-        duration: 1.2,
-        ease: 'power2.out',
-        delay: 1.4,
-        scrollTrigger: {
+      /* ── Double-click contact → back ─────────────────────────── */
+      document.getElementById('contact').addEventListener('dblclick', goToGalleryFromContact);
+
+      /* ── Contact form ─────────────────────────────────────────── */
+      document.getElementById('contactForm').addEventListener('submit', async e => {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        const status = document.getElementById('formStatus');
+        const data = Object.fromEntries(new FormData(e.target).entries());
+        btn.textContent = 'Sending...'; btn.disabled = true; status.textContent = '';
+        try {
+          const ok = await submitToNotion(data);
+          if (ok) { btn.textContent = 'Message sent ✓'; btn.classList.add('sent'); status.textContent = "We'll be in touch."; }
+          else throw new Error();
+        } catch {
+          btn.textContent = 'Submit'; btn.disabled = false;
+          status.textContent = 'Something went wrong — try emailing BADIDHICHEM7@GMAIL.COM';
+        }
+      });
+
+      /* ── Signature section reveal ───────────────────────────── */
+      (function initSigReveal() {
+        const sigWrap = document.querySelector('.sig-wrap');
+        const bgLines = document.querySelectorAll('.sig-bg-line');
+        const eyebrow = document.querySelector('.sig-eyebrow');
+        if (!sigWrap) return;
+
+        /* Signature draws left → right when section enters view */
+        gsap.to(sigWrap, {
+          clipPath: 'inset(0 0% 0 0)',
+          duration: 2.8,
+          ease: 'power2.inOut',
+          scrollTrigger: {
+            trigger: '.sig-section',
+            scroller: 'body',
+            start: 'top 65%',
+            toggleActions: 'play none none none',
+          },
+        });
+
+        /* Text lines drift in opposite horizontal directions, scrubbed by scroll */
+        const scrubTrigger = {
           trigger: '.sig-section',
           scroller: 'body',
-          start: 'top 65%',
-          toggleActions: 'play none none none',
-        },
-      });
-    })();
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1.2,
+        };
+        if (bgLines[0]) gsap.to(bgLines[0], { x: '20vw', ease: 'none', scrollTrigger: scrubTrigger });
+        if (bgLines[1]) gsap.to(bgLines[1], { x: '-20vw', ease: 'none', scrollTrigger: scrubTrigger });
+
+        /* Eyebrow fades in */
+        gsap.to(eyebrow, {
+          opacity: 1,
+          duration: 1.2,
+          ease: 'power2.out',
+          delay: 1.4,
+          scrollTrigger: {
+            trigger: '.sig-section',
+            scroller: 'body',
+            start: 'top 65%',
+            toggleActions: 'play none none none',
+          },
+        });
+      })();
 
 
-  }); // end DOMContentLoaded
+    }); // end DOMContentLoaded
   </script>
 
 </body>
+
 </html>
