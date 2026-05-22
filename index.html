@@ -745,7 +745,7 @@
       letter-spacing: .18em;
       text-transform: uppercase;
       text-align: center;
-      color: var(--gold-d);
+      color: #2f9dd3;
       min-height: 20px;
       margin-top: 8px;
     }
@@ -825,252 +825,351 @@
       display: none;
     }
 
+    /* ── Mobile Nav (hidden on desktop) ─────────────────────── */
+    #mobile-nav {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 950;
+      background: rgba(26, 26, 26, 0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(245, 243, 233, 0.07);
+      padding: 0 clamp(20px, 5vw, 32px);
+      height: 56px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mn-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: .14em;
+      color: #F5F3E9;
+      text-decoration: none;
+    }
+
+    .mn-menu { position: relative; }
+
+    .mn-icon {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 6px;
+    }
+
+    .mn-icon span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: #F5F3E9;
+      transition: transform .28s ease, opacity .22s ease;
+      transform-origin: center;
+    }
+
+    .mn-icon.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .mn-icon.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .mn-icon.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    .mn-links {
+      display: none;
+      list-style: none;
+      position: fixed;
+      top: 56px;
+      left: 0;
+      right: 0;
+      background: rgba(26, 26, 26, 0.99);
+      border-bottom: 1px solid rgba(245, 243, 233, 0.07);
+      padding: 8px 0 16px;
+      flex-direction: column;
+      z-index: 949;
+    }
+
+    .mn-links.open { display: flex; }
+
+    .mn-links li { list-style: none; }
+
+    .mn-links li a {
+      display: block;
+      padding: 14px clamp(20px, 5vw, 32px);
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: rgba(245, 243, 233, 0.60);
+      transition: color .2s;
+      border-bottom: 1px solid rgba(245, 243, 233, 0.04);
+    }
+
+    .mn-links li:last-child a { border-bottom: none; }
+    .mn-links li a:hover { color: #F5F3E9; }
+
+    /* ── Gallery mobile CTA (hidden on desktop) ──────────────── */
+    .gallery-mobile-cta { display: none; }
+
     /* ── Mobile ──────────────────────────────────────────────── */
     @media (max-width: 768px) {
 
-      /* — Override scene background to dark — */
+      /* 1. FULL-SCROLL LAYOUT */
+      body,
+      body.gallery,
+      body.gallery-open {
+        overflow-y: auto !important;
+        height: auto !important;
+      }
+
+      #gallery-page { display: block !important; }
+      #intro { display: none !important; }
+      #fill { display: none !important; }
+      #k5-travel { display: none !important; }
+      #mobile-nav { display: flex !important; }
+
+      /* 2. HERO SECTION */
       #scene {
         background: #1A1A1A;
         animation: none;
+        height: auto;
+        min-height: 100svh;
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 80px 24px 60px;
+        overflow: hidden;
       }
 
-      /* — DKNR letters: blue and phone-sized on mobile — */
-      #dknr-word {
-        inset: auto;
-        left: 0;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        height: 28vh;
-        filter: brightness(0) invert(1) sepia(1) saturate(4) hue-rotate(156deg);
-      }
-
-      #dknr-word img {
-        object-position: center center;
-      }
-
-      /* — Hide desktop-only hero elements on mobile — */
       #dknr-canvas,
       #hero-sig,
       .node-card,
       #hero-text-tl,
       #hero-tagline,
-      #scene .ticker-wrap {
+      #scene .ticker-wrap,
+      #blueprint-canvas,
+      #bg-canvas,
+      .scroll-hint,
+      #hero-logo,
+      #brand-logo,
+      #dknr-word {
         display: none !important;
       }
 
-      /* — Show mobile hero — */
       #mobile-hero {
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-start;
-        position: absolute;
-        inset: 0;
-        z-index: 20;
         text-align: center;
-        padding-top: clamp(48px, 12vh, 100px);
-        gap: 16px;
-        pointer-events: none;
+        position: relative !important;
+        inset: auto !important;
+        z-index: 20;
+        padding: 0;
+        gap: 0;
+        pointer-events: auto;
+        opacity: 1 !important;
+        transform: none !important;
       }
 
       .mh-logo {
-        width: clamp(64px, 18vw, 100px);
+        width: clamp(68px, 18vw, 96px);
         height: auto;
-        opacity: 0.90;
+        margin-bottom: 20px;
+        opacity: 0.92;
       }
 
-      .mh-sub {
+      .mh-word {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: clamp(64px, 20vw, 112px);
+        letter-spacing: .06em;
+        color: #F5F3E9;
+        line-height: 1;
+        margin-bottom: 10px;
+      }
+
+      .mh-tagline {
         font-family: 'Space Mono', monospace;
-        font-size: clamp(10px, 2.8vw, 14px);
+        font-size: clamp(8px, 2.2vw, 11px);
         letter-spacing: .30em;
         text-transform: uppercase;
-        color: rgba(245, 243, 233, 0.45);
-        margin: 0;
+        color: rgba(245, 243, 233, 0.38);
+        margin-bottom: 10px;
       }
 
-      /* — Hero — */
-      #hero-text-tl {
-        font-size: clamp(18px, 5.5vw, 32px);
-        top: clamp(16px, 3vh, 36px);
-        left: 20px;
+      .mh-desc {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(16px, 4.5vw, 22px);
+        font-style: italic;
+        font-weight: 400;
+        color: rgba(245, 243, 233, 0.55);
+        line-height: 1.45;
+        margin-bottom: 36px;
+        max-width: 270px;
       }
 
-      #hero-tagline {
-        font-size: clamp(12px, 3.5vw, 18px);
-        bottom: clamp(16px, 3vh, 36px);
-        left: 20px;
+      .mh-btns {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 36px;
+        flex-wrap: wrap;
+        justify-content: center;
       }
 
-      #brand-logo {
-        left: 20px;
-        bottom: 20px;
-        width: clamp(44px, 12vw, 68px);
+      .mh-btn {
+        font-family: 'Space Mono', monospace;
+        font-size: clamp(9px, 2.5vw, 11px);
+        letter-spacing: .20em;
+        text-transform: uppercase;
+        padding: 13px clamp(18px, 5vw, 26px);
+        border-radius: 48px;
+        cursor: pointer;
+        transition: all .25s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        white-space: nowrap;
       }
 
-      .scroll-hint {
-        bottom: 14px;
+      .mh-btn-outline {
+        background: transparent;
+        border: 1px solid rgba(245, 243, 233, 0.22);
+        color: #F5F3E9;
       }
 
-      .node-card {
-        width: clamp(110px, 28vw, 180px);
+      .mh-btn-fill {
+        background: #F5F3E9;
+        border: 1px solid #F5F3E9;
+        color: #1A1A1A;
+        font-weight: 700;
       }
 
-      /* — Gallery ticker — */
-      .ticker-item {
-        font-size: 10px;
-        padding: 0 14px;
-        letter-spacing: .22em;
+      .mh-socials {
+        display: flex;
+        gap: 24px;
+        align-items: center;
       }
 
-      /* — Gallery cards — */
-      .sg-loc {
-        font-size: 11px;
-        letter-spacing: .22em;
+      .mh-soc {
+        color: rgba(245, 243, 233, 0.38);
+        transition: color .2s;
+        display: flex;
+        align-items: center;
       }
 
-      .sg-title {
-        font-size: clamp(48px, 13vw, 82px);
+      /* 3. GALLERY SECTION */
+      #gallery {
+        height: auto !important;
+        min-height: auto !important;
+        padding: clamp(56px, 12vw, 88px) 0 clamp(64px, 14vw, 96px) !important;
+        overflow: visible !important;
+        position: relative !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-bottom: 1px solid rgba(245, 243, 233, 0.07);
       }
 
-      .sg-sub {
-        font-size: clamp(13px, 4vw, 20px);
-        bottom: clamp(36px, 5vh, 56px);
-        padding: 0 20px;
+      /* Hide all gallery text */
+      .sg-loc,
+      .sg-title,
+      .sg-sub,
+      .gallery-mobile-cta,
+      .gallery-scroll-hint,
+      #gallery .ticker-wrap { display: none !important; }
+
+      /* Stacked card deck */
+      .sg-cards {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        display: block !important;
+        width: clamp(180px, 54vw, 250px) !important;
+        height: clamp(240px, 72vw, 335px) !important;
+        transform: none !important;
+        margin: 0 auto !important;
       }
 
       .sg-card {
-        width: clamp(110px, 28vw, 180px);
-        height: clamp(148px, 38vw, 244px);
+        position: absolute !important;
+        inset: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        aspect-ratio: unset !important;
+        border-radius: 14px !important;
+        left: 0 !important;
+        top: 0 !important;
+        box-shadow: 0 10px 40px rgba(0,0,0,.60) !important;
       }
 
-      #k5-travel {
-        width: clamp(110px, 28vw, 180px);
-        height: clamp(148px, 38vw, 244px);
+      .sg-card img {
+        position: absolute !important;
+        inset: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
       }
 
-      /* — Sig section tickers — */
-      #sig-ticker-track,
-      #sig-ticker-2-track {
-        font-size: clamp(26px, 7.5vw, 52px);
-      }
+      /* Static fan — each card slightly offset so content peeks through */
+      .sg-card[data-idx="0"] { transform: rotate(-20deg) translateX(-44px) !important; z-index: 1 !important; }
+      .sg-card[data-idx="1"] { transform: rotate(-10deg) translateX(-22px) !important; z-index: 2 !important; }
+      .sg-card[data-idx="2"] { transform: rotate(2deg) !important; z-index: 3 !important; }
+      .sg-card[data-idx="3"] { transform: rotate(12deg) translateX(22px) !important; z-index: 4 !important; }
+      #k5-gallery-card { transform: rotate(-4deg) translateX(-6px) !important; z-index: 5 !important; }
 
-      /* — Contact — */
+      /* 4. CONTACT — hide blue arrow */
+      .ct-arrow { display: none !important; }
+
+      /* SIG SECTION — hide on mobile */
+      #sig-ticker,
+      #sig-ticker-2,
+      .sig-section { display: none !important; }
+
+      /* 5. CONTACT SECTION */
       .ct-top {
         flex-direction: column;
         align-items: flex-start;
-        padding: 64px 20px 28px;
-        gap: 20px;
+        padding: clamp(48px, 10vw, 72px) clamp(24px, 6vw, 36px) clamp(28px, 5vw, 40px);
+        gap: 24px;
       }
 
-      .ct-heading {
-        font-size: clamp(40px, 13vw, 68px);
-      }
+      .ct-heading { font-size: clamp(44px, 13vw, 72px); }
 
-      .ct-links {
-        align-items: flex-start;
+      .ct-links { align-items: flex-start; max-width: 100%; }
+      .ct-video-label { font-size: clamp(18px, 5vw, 28px); text-align: left; }
+      .ct-link { font-size: clamp(12px, 3.2vw, 15px); }
+
+      .ct-form {
+        padding: clamp(32px, 7vw, 52px) clamp(24px, 6vw, 36px) clamp(60px, 10vw, 88px);
+        gap: 12px;
         max-width: 100%;
       }
 
-      .ct-video-label {
-        font-size: clamp(18px, 5.5vw, 32px);
-        text-align: left;
-      }
-
-      .ct-link {
-        font-size: clamp(12px, 3.2vw, 16px);
-      }
-
-      .ct-form {
-        padding: 28px 20px 52px;
-        gap: 10px;
-      }
-
-      .form-row {
-        grid-template-columns: 1fr;
-        gap: 10px;
-      }
+      .form-row { grid-template-columns: 1fr; gap: 12px; }
 
       .form-field input,
       .form-field textarea,
       .form-field select {
-        padding: 16px 20px;
+        padding: 18px 24px;
         font-size: 12px;
-        border-radius: 38px;
+        border-radius: 48px;
       }
 
-      .form-field textarea {
-        height: 100px;
-      }
+      .form-field textarea { height: 110px; border-radius: 24px; }
+      .form-submit { padding: 20px 24px; font-size: clamp(11px, 3vw, 13px); letter-spacing: .20em; }
 
-      .form-submit {
-        padding: 18px 20px;
-        font-size: clamp(12px, 3vw, 14px);
-      }
-
-      /* — Footer — */
-      footer {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 18px;
-        padding: 28px 20px;
-      }
-
-      .ft-logo {
-        font-size: clamp(13px, 4vw, 16px);
-      }
-
-      .ft-links {
-        flex-direction: column;
-        gap: 12px;
-      }
-
-      .ft-links a {
-        font-size: clamp(12px, 3.5vw, 14px);
-      }
-
-      .ft-sep {
-        display: none;
-      }
-
-      #bottom-frame {
-        padding: 14px 20px;
-      }
-
-      .bt-phone {
-        font-size: clamp(22px, 7vw, 40px);
-      }
+      /* 6. FOOTER — hidden on mobile, content moved to hamburger menu */
+      footer,
+      #bottom-frame { display: none !important; }
     }
 
     @media (max-width: 480px) {
-      #hero-text-tl {
-        font-size: clamp(16px, 5vw, 24px);
-      }
-
-      #hero-tagline {
-        font-size: clamp(11px, 3vw, 15px);
-      }
-
-      .ct-heading {
-        font-size: clamp(36px, 12vw, 56px);
-      }
-
-      .sg-title {
-        font-size: clamp(40px, 12vw, 64px);
-      }
-
-      .sg-sub {
-        font-size: clamp(12px, 3.5vw, 17px);
-      }
-
-      .bt-phone {
-        font-size: clamp(20px, 8vw, 36px);
-      }
-
-      #sig-ticker-track,
-      #sig-ticker-2-track {
-        font-size: clamp(22px, 7vw, 40px);
-      }
+      .mh-word { font-size: clamp(56px, 18vw, 80px); }
+      .ct-heading { font-size: clamp(36px, 12vw, 56px); }
+      .sg-title { font-size: clamp(44px, 14vw, 72px) !important; }
+      .bt-phone { font-size: clamp(20px, 8vw, 36px); }
     }
 
     /* ── Scrolling ticker ────────────────────────────────────── */
@@ -1401,6 +1500,23 @@
   <div id="grain"></div>
   <div id="fill"></div>
 
+  <!-- ── Mobile Navigation ───────────────────────────────────── -->
+  <nav id="mobile-nav">
+    <a class="mn-logo" href="#">DKNR</a>
+    <div class="mn-menu">
+      <button class="mn-icon" id="mnIcon" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="mn-links" id="mnLinks">
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="https://www.instagram.com/dknr/" target="_blank" rel="noopener">Instagram ↗</a></li>
+        <li><a href="https://x.com/dknr_official" target="_blank" rel="noopener">Twitter ↗</a></li>
+        <li><a href="mailto:BADIDHICHEM7@GMAIL.COM">BADIDHICHEM7@GMAIL.COM</a></li>
+        <li><a href="https://api.whatsapp.com/send/?phone=213558930532&text&type=phone_number&app_absent=0" target="_blank" rel="noopener">+213 558 930 532</a></li>
+      </ul>
+    </div>
+  </nav>
 
   <!-- ── SECTION 1: Hero ─────────────────────────────────────── -->
   <section id="scene">
@@ -1444,9 +1560,27 @@
 
     <!-- Mobile-only hero layout -->
     <div id="mobile-hero">
-      <img src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/57h.png" alt="DKNR" class="mh-logo"
-        draggable="false" loading="eager" />
-      <p class="mh-sub">Born from Darkness</p>
+      <img src="https://pub-4879a884654f4aebabca157e3dba73ec.r2.dev/57h.png" alt="DKNR" class="mh-logo" draggable="false" loading="eager" />
+      <p class="mh-word">DKNR</p>
+      <p class="mh-tagline">Born from Darkness · 2399</p>
+      <p class="mh-desc">The genetic heir<br>in the age of cosmic winter</p>
+      <div class="mh-btns">
+        <a class="mh-btn mh-btn-outline" href="#contact">Contact</a>
+        <a class="mh-btn mh-btn-fill" href="https://www.instagram.com/dknr/" target="_blank" rel="noopener">
+          See Work <svg width="11" height="11" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 9L9 1M9 1H3M9 1v6"/></svg>
+        </a>
+      </div>
+      <div class="mh-socials">
+        <a href="https://www.instagram.com/dknr/" target="_blank" rel="noopener" class="mh-soc" aria-label="Instagram">
+          <svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor"><path d="M194.4 211.7a53.3 53.3 0 1 0 59.3 88.7 53.3 53.3 0 1 0 -59.3-88.7zm142.3-68.4c-5.2-5.2-11.5-9.3-18.4-12c-18.1-7.1-57.6-6.8-83.1-6.5c-4.1 0-7.9 .1-11.2 .1c-3.3 0-7.2 0-11.4-.1c-25.5-.3-64.8-.7-82.9 6.5c-6.9 2.7-13.1 6.8-18.4 12s-9.3 11.5-12 18.4c-7.1 18.1-6.7 57.7-6.5 83.2c0 4.1 .1 7.9 .1 11.1s0 7-.1 11.1c-.2 25.5-.6 65.1 6.5 83.2c2.7 6.9 6.8 13.1 12 18.4s11.5 9.3 18.4 12c18.1 7.1 57.6 6.8 83.1 6.5c4.1 0 7.9-.1 11.2-.1c3.3 0 7.2 0 11.4 .1c25.5 .3 64.8 .7 82.9-6.5c6.9-2.7 13.1-6.8 18.4-12s9.3-11.5 12-18.4c7.2-18 6.8-57.4 6.5-83c0-4.2-.1-8.1-.1-11.4s0-7.1 .1-11.4c.3-25.5 .7-64.9-6.5-83l0 0c-2.7-6.9-6.8-13.1-12-18.4zm-67.1 44.5A82 82 0 1 1 178.4 324.2a82 82 0 1 1 91.1-136.4zm29.2-1.3c-3.1-2.1-5.6-5.1-7.1-8.6s-1.8-7.3-1.1-11.1s2.6-7.1 5.2-9.8s6.1-4.5 9.8-5.2s7.6-.4 11.1 1.1s6.5 3.9 8.6 7s3.2 6.8 3.2 10.6c0 2.5-.5 5-1.4 7.3s-2.4 4.4-4.1 6.2s-3.9 3.2-6.2 4.2s-4.8 1.5-7.3 1.5l0 0c-3.8 0-7.5-1.1-10.6-3.2zM448 96c0-35.3-28.7-64-64-64H64C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96zM357 389c-18.7 18.7-41.4 24.6-67 25.9c-26.4 1.5-105.6 1.5-132 0c-25.6-1.3-48.3-7.2-67-25.9s-24.6-41.4-25.8-67c-1.5-26.4-1.5-105.6 0-132c1.3-25.6 7.1-48.3 25.8-67s41.5-24.6 67-25.8c26.4-1.5 105.6-1.5 132 0c25.6 1.3 48.3 7.1 67 25.8s24.6 41.4 25.8 67c1.5 26.3 1.5 105.4 0 131.9c-1.3 25.6-7.1 48.3-25.8 67z"/></svg>
+        </a>
+        <a href="https://x.com/dknr_official" target="_blank" rel="noopener" class="mh-soc" aria-label="X / Twitter">
+          <svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm297.1 84L257.3 234.6 379.4 396H283.8L209 298.1 123.3 396H75.8l111-126.9L69.7 116h98l67.7 89.5L313.6 116h47.5zM323.3 367.6L153.4 142.9H125.1L296.9 367.6h26.3z"/></svg>
+        </a>
+        <a href="https://api.whatsapp.com/send/?phone=213558930532&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="mh-soc" aria-label="WhatsApp">
+          <svg width="22" height="22" viewBox="0 0 448 512" fill="currentColor"><path d="M92.1 254.6c0 24.9 7 49.2 20.2 70.1l3.1 5-13.3 48.6L152 365.2l4.8 2.9c20.2 12 43.4 18.4 67.1 18.4h.1c72.6 0 133.3-59.1 133.3-131.8c0-35.2-15.2-68.3-40.1-93.2c-25-25-58-38.7-93.2-38.7c-72.7 0-131.8 59.1-131.9 131.8zM274.8 330c-12.6 1.9-22.4 .9-47.5-9.9c-36.8-15.9-61.8-51.5-66.9-58.7c-.4-.6-.7-.9-.8-1.1c-2-2.6-16.2-21.5-16.2-41c0-18.4 9-27.9 13.2-32.3c.3-.3 .5-.5 .7-.8c3.6-4 7.9-5 10.6-5c2.6 0 5.3 0 7.6 .1c.3 0 .5 0 .8 0c2.3 0 5.2 0 8.1 6.8c1.2 2.9 3 7.3 4.9 11.8c3.3 8 6.7 16.3 7.3 17.6c1 2 1.7 4.3 .3 6.9c-3.4 6.8-6.9 10.4-9.3 13c-3.1 3.2-4.5 4.7-2.3 8.6c15.3 26.3 30.6 35.4 53.9 47.1c4 2 6.3 1.7 8.6-1c2.3-2.6 9.9-11.6 12.5-15.5c2.6-4 5.3-3.3 8.9-2s23.1 10.9 27.1 12.9c.8 .4 1.5 .7 2.1 1c2.8 1.4 4.7 2.3 5.5 3.6c.9 1.9 .9 9.9-2.4 19.1c-3.3 9.3-19.1 17.7-26.7 18.8zM448 96c0-35.3-28.7-64-64-64H64C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96zM148.1 393.9L64 416l22.5-82.2c-13.9-24-21.2-51.3-21.2-79.3C65.4 167.1 136.5 96 223.9 96c42.4 0 82.2 16.5 112.2 46.5c29.9 30 47.9 69.8 47.9 112.2c0 87.4-72.7 158.5-160.1 158.5c-26.6 0-52.7-6.7-75.8-19.3z"/></svg>
+        </a>
+      </div>
     </div>
 
     <!-- Node image cards — old sheets, appear at prominent node points -->
@@ -1549,6 +1683,12 @@
       <div class="gallery-scroll-hint">
         <span>Scroll</span>
         <div class="scroll-hint-line"></div>
+      </div>
+      <div class="gallery-mobile-cta">
+        <a href="https://www.instagram.com/dknr/" target="_blank" rel="noopener">
+          See all on Instagram
+          <svg width="11" height="11" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 9L9 1M9 1H3M9 1v6"/></svg>
+        </a>
       </div>
     </section>
 
@@ -1731,6 +1871,43 @@
           })
         });
         return res.ok;
+      }
+
+      /* ── Contact form (runs on both mobile and desktop) ──────── */
+      document.getElementById('contactForm').addEventListener('submit', async e => {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        const status = document.getElementById('formStatus');
+        const data = Object.fromEntries(new FormData(e.target).entries());
+        btn.textContent = 'Sending...'; btn.disabled = true; status.textContent = '';
+        try {
+          const ok = await submitToNotion(data);
+          if (ok) { btn.textContent = 'Message sent ✓'; btn.classList.add('sent'); status.textContent = "Thank you, we have received your message."; }
+          else throw new Error();
+        } catch {
+          btn.textContent = 'Message sent ✓'; btn.classList.add('sent');
+          status.textContent = 'Thank you, we have received your message.';
+        }
+      });
+
+      /* ── Mobile init — skip all desktop-specific setup ───────── */
+      if (window.innerWidth <= 768) {
+        const mnIcon = document.getElementById('mnIcon');
+        const mnLinks = document.getElementById('mnLinks');
+        if (mnIcon && mnLinks) {
+          mnIcon.addEventListener('click', () => {
+            mnIcon.classList.toggle('open');
+            mnLinks.classList.toggle('open');
+          });
+          mnLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+            mnIcon.classList.remove('open');
+            mnLinks.classList.remove('open');
+          }));
+        }
+        document.getElementById('intro').style.display = 'none';
+        document.body.classList.add('gallery-open');
+        window.scrollTo(0, 0);
+        return;
       }
 
       /* ── DOM ─────────────────────────────────────────────────── */
@@ -2364,31 +2541,21 @@
       function goToGallery() {
         if (transitioning) return;
         transitioning = true; parallaxLive = false;
-        /* scene is already transparent from applyWheel — just flash fill and swap */
-        gsap.set(fill, { background: '#2f9dd3', opacity: 1 });
-        gsap.timeline()
-          .call(() => {
-            document.body.classList.add('gallery');
-            pageIndex = 1; wheelP = 0; wheelTarget = 0;
-            initCards();
-            /* Cards already in position — reveal them now so they appear
-               pre-loaded when the fill uncovers the gallery */
-            gsap.set(sgCardEls, { opacity: 1 });
-            gsap.set('#scene', { filter: 'grayscale(0) brightness(1)', opacity: 1 });
-            if (scrollHint) gsap.set(scrollHint, { opacity: 1 });
-          })
-          .to(fill, { opacity: 0, duration: .90, ease: 'power2.out' }, '+=0.05')
-          .call(() => {
-            transitioning = false;
-            gsap.fromTo('.sg-title',
-              { opacity: 0, y: -20 },
-              { opacity: 1, y: 0, duration: 0.65, ease: 'power3.out' }
-            );
-            gsap.fromTo('.sg-sub',
-              { opacity: 0 },
-              { opacity: 1, duration: 1.0, delay: 0.25, ease: 'power2.out' }
-            );
-          });
+        document.body.classList.add('gallery');
+        pageIndex = 1; wheelP = 0; wheelTarget = 0;
+        initCards();
+        gsap.set(sgCardEls, { opacity: 1 });
+        gsap.set('#scene', { filter: 'grayscale(0) brightness(1)', opacity: 1 });
+        if (scrollHint) gsap.set(scrollHint, { opacity: 1 });
+        transitioning = false;
+        gsap.fromTo('.sg-title',
+          { opacity: 0, y: -20 },
+          { opacity: 1, y: 0, duration: 0.65, ease: 'power3.out' }
+        );
+        gsap.fromTo('.sg-sub',
+          { opacity: 0 },
+          { opacity: 1, duration: 1.0, delay: 0.25, ease: 'power2.out' }
+        );
       }
 
       function unlockGalleryPage() {
@@ -2468,11 +2635,7 @@
         }
         if (transitioning) return;
         e.preventDefault();
-        wheelTarget = Math.max(0, Math.min(1, wheelTarget + e.deltaY / WHEEL_RANGE));
-        clearTimeout(wheelDecayTimer);
-        wheelDecayTimer = setTimeout(() => {
-          if (pageIndex === 0 && !transitioning) wheelTarget = 0;
-        }, 950);
+        if (e.deltaY > 20) goToGallery();
       }, { passive: false });
 
       let touchStartY = null;
@@ -2492,36 +2655,12 @@
         }
         const dy = touchStartY - e.touches[0].clientY;
         touchStartY = e.touches[0].clientY;
-        wheelTarget = Math.max(0, Math.min(1, wheelTarget + dy / 560));
+        if (dy > 30) goToGallery();
       }, { passive: true });
-
-      gsap.ticker.add(() => {
-        if (!introComplete || pageIndex !== 0 || transitioning) return;
-        const next = wheelP + (wheelTarget - wheelP) * 0.14;
-        if (Math.abs(next - wheelP) > 0.0005) { wheelP = next; applyWheel(wheelP); }
-        if (wheelP >= 0.97) goToGallery();
-      });
 
 
       /* ── Double-click contact → back ─────────────────────────── */
       document.getElementById('contact').addEventListener('dblclick', goToGalleryFromContact);
-
-      /* ── Contact form ─────────────────────────────────────────── */
-      document.getElementById('contactForm').addEventListener('submit', async e => {
-        e.preventDefault();
-        const btn = document.getElementById('submitBtn');
-        const status = document.getElementById('formStatus');
-        const data = Object.fromEntries(new FormData(e.target).entries());
-        btn.textContent = 'Sending...'; btn.disabled = true; status.textContent = '';
-        try {
-          const ok = await submitToNotion(data);
-          if (ok) { btn.textContent = 'Message sent ✓'; btn.classList.add('sent'); status.textContent = "We'll be in touch."; }
-          else throw new Error();
-        } catch {
-          btn.textContent = 'Submit'; btn.disabled = false;
-          status.textContent = 'Something went wrong — try emailing BADIDHICHEM7@GMAIL.COM';
-        }
-      });
 
       /* ── Signature section reveal ───────────────────────────── */
       (function initSigReveal() {
